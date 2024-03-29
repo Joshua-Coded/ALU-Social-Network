@@ -9,12 +9,11 @@ const SearchAccount = () => {
     };
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}> {/* Added position: 'relative' */}
+        <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
             <FiSearch />
-            {/* Assuming you might add the search input here */}
             <div onClick={toggleModal} style={{ cursor: 'pointer', marginLeft: '10px', display: 'flex', alignItems: 'center' }}>
                 <FiMoreHorizontal />
-                <span style={{ marginLeft: '5px' }}>My Account</span> {/* "My Account" text */}
+                <span style={{ marginLeft: '5px' }}>My Account</span>
             </div>
             {isModalOpen && (
                 <div style={{ position: 'absolute', top: '100%', left: '0', backgroundColor: '#fff', padding: '10px', boxShadow: '0 2px 5px rgba(0,0,0,0.2)', zIndex: 100 }}>
