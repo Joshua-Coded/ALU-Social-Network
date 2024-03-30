@@ -1,19 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import FeedPage from './pages/FeedPage';
-
+import Navigation from '../src/components/Navigation';
+import HomePage from '../src/pages/HomePage';
+import LoginForm from '../src/components/LoginForm';
+import RegisterForm from '../src/components/RegisterForm';
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} exact />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/feed" element={<FeedPage />} />
-
-      </Routes>
+      <div>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

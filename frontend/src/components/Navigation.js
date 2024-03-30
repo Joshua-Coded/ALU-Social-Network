@@ -1,16 +1,17 @@
-// Navigation.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; // Adjusted import
+import { useNavigate } from 'react-router-dom'; // Corrected import
 import { FiSearch, FiMoreHorizontal, FiMenu } from 'react-icons/fi';
+import LoginForm from './LoginForm';
 import "./Navigation.css";
 
 const Navigation = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isNavVisible, setIsNavVisible] = useState(false);
+    const navigate = useNavigate(); // Corrected to use useNavigate
 
     const toggleModal = () => setIsModalOpen(!isModalOpen);
     const toggleNav = () => setIsNavVisible(!isNavVisible);
-
     return (
         <nav className="navigation-container">
             <button className="hamburger-icon" onClick={toggleNav} aria-label="Toggle navigation">
@@ -36,10 +37,10 @@ const Navigation = () => {
             </div>
             {isModalOpen && (
                 <div className="account-modal">
-                    <ul>
-                        <li>Login</li>
-                        <li>Register</li>
-                    </ul>
+                    <LoginForm onLoginSuccess={() => {
+                        setIsModalOpen(false); // Close the modal upon successful login
+                        navigate('/dashboard'); // Navigate to the dashboard
+                    }} />
                 </div>
             )}
         </nav>
