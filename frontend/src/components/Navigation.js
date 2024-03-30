@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Adjusted import
-import { useNavigate } from 'react-router-dom'; // Corrected import
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FiSearch, FiMoreHorizontal, FiMenu } from 'react-icons/fi';
 import LoginForm from './LoginForm';
 import "./Navigation.css";
@@ -8,7 +8,7 @@ import "./Navigation.css";
 const Navigation = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isNavVisible, setIsNavVisible] = useState(false);
-    const navigate = useNavigate(); // Corrected to use useNavigate
+    const navigate = useNavigate();
 
     const toggleModal = () => setIsModalOpen(!isModalOpen);
     const toggleNav = () => setIsNavVisible(!isNavVisible);
@@ -38,8 +38,8 @@ const Navigation = () => {
             {isModalOpen && (
                 <div className="account-modal">
                     <LoginForm onLoginSuccess={() => {
-                        setIsModalOpen(false); // Close the modal upon successful login
-                        navigate('/dashboard'); // Navigate to the dashboard
+                        setIsModalOpen(false);
+                        navigate('/dashboard');
                     }} />
                 </div>
             )}
