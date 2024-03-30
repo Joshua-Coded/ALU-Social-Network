@@ -1,0 +1,249 @@
+/* Navigation.css */
+.navigation-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hamburger-icon {
+    align-self: flex-start;
+    cursor: pointer;
+    display: none;
+    /* Hidden by default, shown in mobile view */
+    margin-bottom: 10px;
+}
+
+.links-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.links-container a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px;
+    transition: color 0.3s ease;
+}
+
+.links-container a:hover {
+    color: #007bff;
+}
+
+.search-account-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+    /* Add padding on the sides for some spacing */
+}
+
+.search-area {
+    display: flex;
+    flex-grow: 1;
+    /* Allow the search area to take up available space */
+    align-items: center;
+    gap: 10px;
+    /* Space between search icon and input */
+}
+
+.search-input {
+    flex-grow: 1;
+    /* Ensure the input takes up available space within the search area */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+}
+
+.account-area {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    /* Space between the "My Account" text and the horizontal dots icon */
+    padding-left: 20px;
+    /* Adds some space between search area and account area */
+}
+
+.account-area {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.account-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    z-index: 1050;
+    /* High z-index to ensure modal is above everything */
+}
+
+.account-modal ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.account-modal ul li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.account-modal ul li:last-child {
+    border-bottom: none;
+}
+
+.account-modal ul li:hover {
+    background-color: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+    .hamburger-icon {
+        display: block;
+        /* Ensure visibility on mobile */
+    }
+
+    /* If you decide the search-account-area should always be visible on mobile: */
+    .search-account-area {
+        display: flex;
+        /* Always visible, unlike the links */
+        /* Consider adjusting padding or layout specifics for smaller screens */
+    }
+
+    .links-container,
+    .search-account-area.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Navigation.css */
+
+/* Always visible on desktop */
+.links-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    /* Adjust as needed */
+    flex-wrap: wrap;
+    padding: 10px 0;
+}
+
+/* Specific styles for mobile view */
+@media (max-width: 768px) {
+    .hamburger-icon {
+        display: block;
+        /* Show the icon on smaller screens */
+    }
+
+    .links-container {
+        display: none;
+        /* Initially hidden in mobile view */
+        flex-direction: column;
+        /* Stack links vertically */
+        width: 100%;
+        /* Use the full width */
+        /* Any additional styling for mobile */
+    }
+
+    .links-container.active {
+        display: flex;
+        /* Show when hamburger is clicked */
+    }
+}
+
+.navigation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    /* Adjust based on your design preference */
+    margin: 0 auto;
+}
+
+.logo {
+    height: 50px;
+    /* Adjust based on your logo's size */
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 1;
+    /* Allows the search bar to take up available space */
+}
+
+.search-icon {
+    cursor: pointer;
+}
+
+.search-input {
+    width: 100%;
+    /* Allows the input to fill the space in the search bar */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+}
+
+.hamburger-icon {
+    display: none;
+    /* Initially hidden for desktop view */
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .hamburger-icon {
+        display: block;
+        /* Show the icon on smaller screens */
+    }
+
+    /* Adjust the search bar's visibility or appearance as needed for mobile */
+    .search-bar {
+        /* Optional: Adjust the size or hide on very small screens */
+    }
+
+    .links-container,
+    .links-container.active {
+        display: none;
+        /* Adjust if you want to show or hide links differently on mobile */
+    }
+
+    .links-container.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
