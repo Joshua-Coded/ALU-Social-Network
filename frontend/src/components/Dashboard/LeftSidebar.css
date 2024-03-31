@@ -1,10 +1,9 @@
-/* LeftSidebar.css */
 .left-sidebar {
     width: 250px;
-    /* Adjust width as necessary */
+
     background-color: #f8f9fa;
     height: 100vh;
-    /* Full height */
+
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
