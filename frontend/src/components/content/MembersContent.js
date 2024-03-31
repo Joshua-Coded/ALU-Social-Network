@@ -1,48 +1,71 @@
 import React, { useState } from 'react';
 
 const MembersContent = () => {
-    // Enhanced member data with categories and bios
     const [members, setMembers] = useState([
-        { _id: 'member1', name: 'Alice Johnson', role: 'Data Scientist', category: 'Staff', bio: 'Alice has over 10 years of experience in data science and loves to share her knowledge.', color: '#007bff' },
-        { _id: 'member2', name: 'Mohamed Al Fayed', role: 'Product Manager', category: 'Alumni', bio: 'Mohamed is a successful product manager with a passion for user-centered design and innovation.', color: '#28a745' },
-        { _id: 'member3', name: 'Liu Wei', role: 'Software Engineer', category: 'Student', bio: 'Liu is currently pursuing her degree in computer science and excels in full-stack development.', color: '#dc3545' },
-        { _id: 'member4', name: 'Patricia Santos', role: 'UX Designer', category: 'Staff', bio: 'Patricia is an experienced UX designer who believes in creating intuitive and accessible designs.', color: '#ffc107' }
+        {
+            _id: 'member1',
+            name: 'John Doe',
+            role: 'Alumni',
+            bio: 'John is a software engineer at Google, focusing on AI and machine learning.',
+            socials: {
+                linkedin: 'https://www.linkedin.com/in/johndoe/',
+                instagram: 'https://www.instagram.com/johndoe/',
+                twitter: 'https://twitter.com/johndoe'
+            }
+        },
+        {
+            _id: 'member2',
+            name: 'Jane Smith',
+            role: 'Student',
+            bio: 'Jane is a computer science major with a passion for open-source projects.',
+            socials: {
+                linkedin: 'https://www.linkedin.com/in/janesmith/',
+                instagram: 'https://www.instagram.com/janesmith/',
+                twitter: 'https://twitter.com/janesmith'
+            }
+        },
+        {
+            _id: 'member3',
+            name: 'Emma Wilson',
+            role: 'Staff',
+            bio: 'Emma is part of the university\'s IT department, helping to innovate educational technology.',
+            socials: {
+                linkedin: 'https://www.linkedin.com/in/emmawilson/',
+                instagram: 'https://www.instagram.com/emmawilson/',
+                twitter: 'https://twitter.com/emmawilson'
+            }
+        },
     ]);
 
-    const memberStyle = (backgroundColor) => ({
-        padding: '15px',
-        margin: '10px 0',
-        borderRadius: '8px',
-        backgroundColor,
-        color: 'white',
+    const memberStyle = {
+        padding: '20px',
+        margin: '15px 0',
+        borderRadius: '10px',
+        backgroundColor: '#f0f0f0',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-    });
-
-    const bioStyle = {
-        fontSize: '0.8rem',
-        marginTop: '10px',
-        opacity: 0.9,
+        gap: '10px',
     };
 
     return (
         <div style={{ padding: '20px' }}>
             <h2 style={{ textAlign: 'center' }}>Members</h2>
-            {members.length > 0 ? (
-                <ul style={{ listStyleType: 'none', padding: 0 }}>
-                    {members.map(member => (
-                        <li key={member._id} style={memberStyle(member.color)}>
-                            <strong>{member.name}</strong> - <em>{member.role}</em>
-                            <div style={{ fontSize: '0.9rem', marginTop: '5px' }}>{member.category}</div>
-                            <div style={bioStyle}>{member.bio}</div>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No members to display.</p>
-            )}
+            <ul style={{ listStyleType: 'none', padding: 0 }}>
+                {members.map(member => (
+                    <li key={member._id} style={memberStyle}>
+                        <h3>{member.name}</h3>
+                        <p>{member.bio}</p>
+                        <small>Role: {member.role}</small>
+                        <div>
+                            <a href={member.socials.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+                            <a href={member.socials.instagram} target="_blank" rel="noopener noreferrer"> Instagram</a> |
+                            <a href={member.socials.twitter} target="_blank" rel="noopener noreferrer"> Twitter</a>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+            {members.length === 0 && <p>No members to display.</p>}
         </div>
     );
 };

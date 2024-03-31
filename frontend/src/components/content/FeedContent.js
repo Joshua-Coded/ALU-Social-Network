@@ -1,140 +1,73 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const FeedContent = () => {
-    const [posts, setPosts] = useState([]);
-    const [showPostForm, setShowPostForm] = useState(false);
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
-    const [message, setMessage] = useState({ text: '', type: '' });
+    const [posts, setPosts] = useState([
+        // Adding more real-life post examples with real links
+        {
+            _id: 'post1',
+            title: 'The Future of Web Development',
+            description: 'Exploring the upcoming trends in web development, including new frameworks and languages.',
+            dateCreated: new Date(2024, 3, 15),
+            likes: 120,
+            comments: 30,
+            dislikes: 5,
+            readMoreLink: 'https://medium.com/future-of-web-development'
+        },
+        {
+            _id: 'post2',
+            title: 'AI and Machine Learning Demystified',
+            description: 'A beginner\'s guide to understanding AI and machine learning, and their impact on industries.',
+            dateCreated: new Date(2024, 5, 20),
+            likes: 250,
+            comments: 45,
+            dislikes: 2,
+            readMoreLink: 'https://towardsdatascience.com/ai-ml-demystified'
+        },
+        // Adding more dummy posts to make it 10
+        ...Array.from({ length: 8 }).map((_, index) => ({
+            _id: `post${index + 3}`,
+            title: `Interesting Tech Trend #${index + 1}`,
+            description: `An in-depth look at a fascinating technology trend that's shaping our future #${index + 1}.`,
+            dateCreated: new Date(2024, index % 12, (index + 1) * 2),
+            likes: 50 + index * 10,
+            comments: 10 + index * 5,
+            dislikes: 1 + index,
+            readMoreLink: `https://tech-trends.com/posts/trend-${index + 1}`
+        }))
+    ]);
 
-    const isLoggedIn = () => !!localStorage.getItem('token');
-
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/api/feed');
-                const data = await response.json();
-                setPosts(data);
-            } catch (error) {
-                console.error("Failed to fetch posts:", error);
-            }
-        };
-
-        fetchPosts();
-    }, []);
-
-    const handlePostChange = ({ target: { name, value } }) => {
-        name === 'title' ? setTitle(value) : setBody(value);
-    };
-    // Example login response handling function
-    function handleLoginSuccess(response) {
-        const { token, user } = response;
-        localStorage.setItem('token', token);
-        localStorage.setItem('userId', user.id); // Adjust according to your actual response structure
-
-        // Redirect or update UI after successful login
-        // navigate('/dashboard'); or similar based on your routing setup
-    }
-
-
-    const submitNewPost = async (event) => {
-        event.preventDefault();
-
-        // Retrieve the stored user ID and token
-        const userId = localStorage.getItem('userId');
-        const token = localStorage.getItem('token');
-        if (!token || !userId) {
-            setMessage({ text: 'You must be logged in to create a post.', type: 'error' });
-            return;
-        }
-
-        if (!title.trim() || !body.trim()) {
-            setMessage({ text: 'Title and body are both required fields.', type: 'error' });
-            return;
-        }
-
-        try {
-            const response = await fetch('http://localhost:5000/api/feed', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    title,
-                    body,
-                    author: userId, // Use the userId here to associate the post with the user
-                }),
-            });
-
-            if (!response.ok) {
-                const data = await response.json();
-                throw new Error(data.message || 'Failed to create post');
-            }
-
-            const newPost = await response.json();
-            // Update your state or UI as needed here
-            setTitle('');
-            setBody('');
-            setMessage({ text: 'Post created successfully!', type: 'success' });
-            // Optionally, refresh the list of posts here
-        } catch (error) {
-            console.error('Error creating post:', error);
-            setMessage({ text: error.message || 'Failed to create post', type: 'error' });
-        }
+    const postStyle = {
+        padding: '20px',
+        margin: '15px 0',
+        borderRadius: '10px',
+        backgroundColor: '#f0f0f0',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
     };
 
     return (
-        <div>
-            <h2>Post Feed</h2>
-            {isLoggedIn() ? (
-                <>
-                    <button onClick={() => setShowPostForm(!showPostForm)}>
-                        Create Post
-                    </button>
-                    {showPostForm && (
-                        <form onSubmit={submitNewPost}>
-                            <div>
-                                <label htmlFor="title">Title:</label>
-                                <input
-                                    type="text"
-                                    id="title"
-                                    name="title"
-                                    value={title}
-                                    onChange={handlePostChange}
-                                    placeholder="Post Title"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="body">Body:</label>
-                                <textarea
-                                    id="body"
-                                    name="body"
-                                    value={body}
-                                    onChange={handlePostChange}
-                                    placeholder="Post Body"
-                                    required
-                                ></textarea>
-                            </div>
-                            <button type="submit">Submit Post</button>
-                            {message.text && <div className={`message ${message.type}`}>{message.text}</div>}
-                        </form>
-                    )}
-                </>
-            ) : (
-                <p>Please log in to create posts.</p>
-            )}
-
-            {/* Display each post */}
-            {posts.map(post => (
-                <div key={post._id}>
-                    <h3>{post.title}</h3>
-                    <p>{post.body}</p>
-                    {/*  Edit and Delete buttons for each post, depending on user authentication and post ownership */}
-                </div>
-            ))}
+        <div style={{ padding: '20px' }}>
+            <h2 style={{ textAlign: 'center' }}>Feed</h2>
+            <ul style={{ listStyleType: 'none', padding: 0 }}>
+                {posts.map(post => (
+                    <li key={post._id} style={postStyle}>
+                        <h3>{post.title}</h3>
+                        <p>{post.description}</p>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+                            <span>Date: {post.dateCreated.toLocaleDateString()}</span>
+                            <span>Likes: {post.likes}</span>
+                            <span>Comments: {post.comments}</span>
+                            <span>Dislikes: {post.dislikes}</span>
+                        </div>
+                        <a href={post.readMoreLink} target="_blank" rel="noopener noreferrer">Read More</a>
+                    </li>
+                ))}
+            </ul>
+            {posts.length === 0 && <p>No posts to display.</p>}
         </div>
     );
 };
+
 export default FeedContent;

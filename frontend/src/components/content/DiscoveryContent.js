@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const DiscoveryContent = () => {
-    const [discoveries, setDiscoveries] = useState([
+    const discoveries = [
         {
             _id: 'discovery1',
             title: 'Machine Learning Hub',
             description: 'A space for ML enthusiasts to share projects and ideas.',
             type: 'Space',
             color: '#17a2b8',
-            url: 'https://www.kaggle.com/'
+            url: 'https://www.kaggle.com/',
         },
         {
             _id: 'discovery2',
@@ -16,7 +16,7 @@ const DiscoveryContent = () => {
             description: 'A leading AI researcher known for groundbreaking work.',
             type: 'Member',
             color: '#ffc107',
-            url: 'https://scholar.google.com/citations?user=NP4n9ewAAAAJ&hl=en'
+            url: 'https://scholar.google.com/citations?user=NP4n9ewAAAAJ&hl=en',
         },
         {
             _id: 'discovery3',
@@ -24,9 +24,18 @@ const DiscoveryContent = () => {
             description: 'An article on the latest trends in technology and innovation.',
             type: 'Post',
             color: '#6c757d',
-            url: 'https://www.wired.com/category/tech/'
+            url: 'https://www.wired.com/category/tech/',
         },
-    ]);
+        // Dynamically generate additional discovery items
+        ...Array.from({ length: 7 }).map((_, index) => ({
+            _id: `discovery${index + 4}`,
+            title: `Innovative Discovery #${index + 4}`,
+            description: `Insights into innovative tech trend #${index + 4}.`,
+            type: 'Article',
+            color: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Generate random color
+            url: `https://example.com/discovery${index + 4}`,
+        }))
+    ];
 
     const discoveryStyle = (backgroundColor) => ({
         padding: '20px',
