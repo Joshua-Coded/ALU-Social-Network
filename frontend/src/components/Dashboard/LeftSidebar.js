@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDashboard } from '../context/DashboardContext';
-import './LeftSidebar.css'; // Import the CSS file here
+import './LeftSidebar.css';
 
 const LeftSidebar = () => {
-    const { currentView, setCurrentView } = useDashboard(); // Assuming you have a way to get the current view as well
+    const { currentView, setCurrentView } = useDashboard();
 
     return (
         <div className="left-sidebar">
