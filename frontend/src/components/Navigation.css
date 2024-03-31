@@ -17,14 +17,6 @@
     margin-bottom: 10px;
 }
 
-.links-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    gap: 20px;
-    flex-wrap: wrap;
-}
 
 .links-container a {
     text-decoration: none;
@@ -37,48 +29,38 @@
     color: #007bff;
 }
 
+/* 
 .search-account-area {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     padding: 0 20px;
-    /* Add padding on the sides for some spacing */
-}
+} */
 
-.search-area {
+/* .search-area {
     display: flex;
     flex-grow: 1;
-    /* Allow the search area to take up available space */
+
     align-items: center;
     gap: 10px;
-    /* Space between search icon and input */
-}
 
-.search-input {
+} */
+
+/* .search-input {
     flex-grow: 1;
-    /* Ensure the input takes up available space within the search area */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 20px;
     outline: none;
-}
+} */
 
-.account-area {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    /* Space between the "My Account" text and the horizontal dots icon */
-    padding-left: 20px;
-    /* Adds some space between search area and account area */
-}
-
-.account-area {
+/* .account-area {
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 5px;
-}
+} */
 
 .account-modal {
     position: fixed;
@@ -89,10 +71,9 @@
     max-width: 400px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9);
     padding: 20px;
     z-index: 1050;
-    /* High z-index to ensure modal is above everything */
 }
 
 .account-modal ul {
@@ -118,14 +99,10 @@
 @media (max-width: 768px) {
     .hamburger-icon {
         display: block;
-        /* Ensure visibility on mobile */
     }
 
-    /* If you decide the search-account-area should always be visible on mobile: */
     .search-account-area {
         display: flex;
-        /* Always visible, unlike the links */
-        /* Consider adjusting padding or layout specifics for smaller screens */
     }
 
     .links-container,
@@ -136,51 +113,16 @@
     }
 }
 
-/* Navigation.css */
 
-/* Always visible on desktop */
 .links-container {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
-    /* Adjust as needed */
     flex-wrap: wrap;
     padding: 10px 0;
 }
 
-/* Specific styles for mobile view */
-@media (max-width: 768px) {
-    .hamburger-icon {
-        display: block;
-        /* Show the icon on smaller screens */
-    }
-
-    .links-container {
-        display: none;
-        /* Initially hidden in mobile view */
-        flex-direction: column;
-        /* Stack links vertically */
-        width: 100%;
-        /* Use the full width */
-        /* Any additional styling for mobile */
-    }
-
-    .links-container.active {
-        display: flex;
-        /* Show when hamburger is clicked */
-    }
-}
-
-.navigation-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #ffffff;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 100%;
-}
 
 .header-container {
     display: flex;
@@ -188,7 +130,6 @@
     align-items: center;
     width: 100%;
     max-width: 1200px;
-    /* Adjust based on your design preference */
     margin: 0 auto;
 }
 
