@@ -7,6 +7,7 @@ const FeedContent = () => {
     const [editingPostId, setEditingPostId] = useState(null);
     const [editPostData, setEditPostData] = useState({ title: '', body: '' });
     const [message, setMessage] = useState({ text: '', type: '' });
+    const [error, setError] = useState('');
 
 
     useEffect(() => {
@@ -93,32 +94,27 @@ const FeedContent = () => {
     const submitNewPost = async (event) => {
         event.preventDefault();
         try {
+            // Your existing POST request logic
             const response = await fetch('http://localhost:5000/api/feed', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    title: newPost.title,
-                    body: newPost.body,
-                }),
+                body: JSON.stringify(newPost),
             });
+            const data = await response.json();
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Failed to create post');
+                throw new Error(data.message || 'Failed to create post');
             }
-            const postData = await response.json();
-            console.log('Post created successfully:', postData);
-            // Update local state to include new post
-            setPosts(prevPosts => [...prevPosts, postData]);
-            // Clear form and any displayed error messages
+            // Reset form and error state upon successful post creation
             setNewPost({ title: '', body: '' });
             setError('');
         } catch (error) {
-            console.error("Error creating post:", error.message);
-            setError(error.message);
+            console.error("Error creating post:", error);
+            setError(error.message || 'Failed to create post');
         }
     };
+
 
 
     const deletePost = async (postId) => {
@@ -166,6 +162,7 @@ const FeedContent = () => {
 
     return (
         <div>
+            {error && <div className="error-message">{error}</div>}
             <h2>Post Feed</h2>
             <button onClick={() => setShowPostForm(!showPostForm)}>Create Post</button>
             {showPostForm && (

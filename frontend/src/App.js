@@ -11,24 +11,27 @@ import DiscoveryPage from '../src/pages/DiscoveryPage';
 import EventsPage from '../src/pages/EventsPage';
 import MembersPage from '../src/pages/MembersPage';
 import ChannelsPage from '../src/pages/ChannelsPage';
+import { AuthProvider } from '../src/components/context/AuthContext';
 
 
 function App() {
   return (
-    <Router>
-      <Navigation />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/register" element={<RegisterForm />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/feed" element={<FeedPage />} />
-        <Route path="/discovery" element={<DiscoveryPage />} />
-        <Route path="/events" element={<EventsPage />} />
-        <Route path="/members" element={<MembersPage />} />
-        <Route path="/channels" element={<ChannelsPage />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/feed" element={<FeedPage />} />
+          <Route path="/discovery" element={<DiscoveryPage />} />
+          <Route path="/events" element={<EventsPage />} />
+          <Route path="/members" element={<MembersPage />} />
+          <Route path="/channels" element={<ChannelsPage />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

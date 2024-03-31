@@ -4,14 +4,23 @@ import { useNavigate } from 'react-router-dom';
 import { FiSearch, FiMoreHorizontal, FiMenu } from 'react-icons/fi';
 import LoginForm from './LoginForm';
 import "./Navigation.css";
+import { useAuth } from '../components/context/AuthContext';
 
 const Navigation = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isNavVisible, setIsNavVisible] = useState(false);
     const navigate = useNavigate();
+    const { isAuthenticated, logout } = useAuth();
 
     const toggleModal = () => setIsModalOpen(!isModalOpen);
     const toggleNav = () => setIsNavVisible(!isNavVisible);
+
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
+
     return (
         <nav className="navigation-container">
             <button className="hamburger-icon" onClick={toggleNav} aria-label="Toggle navigation">
@@ -37,10 +46,16 @@ const Navigation = () => {
             </div>
             {isModalOpen && (
                 <div className="account-modal">
-                    <LoginForm onLoginSuccess={() => {
-                        setIsModalOpen(false);
-                        navigate('/dashboard');
-                    }} />
+                    {isAuthenticated ? (
+                        // Show logout button if authenticated
+                        <button onClick={() => { logout(); navigate('/'); setIsModalOpen(false); }}>Logout</button>
+                    ) : (
+                        // Show LoginForm if not authenticated
+                        <LoginForm onLoginSuccess={() => {
+                            setIsModalOpen(false);
+                            navigate('/dashboard');
+                        }} />
+                    )}
                 </div>
             )}
         </nav>
