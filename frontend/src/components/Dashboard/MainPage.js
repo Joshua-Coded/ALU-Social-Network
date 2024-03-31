@@ -2,10 +2,10 @@
 import React from 'react';
 import { useDashboard } from '../context/DashboardContext';
 import FeedContent from '../content/FeedContent';
-import { DiscoveryContent } from '../content/DiscoveryContent';
-import { EventsContent } from '../content/EventsContent';
-import { MembersContent } from '../content/MembersContent';
-import { ChannelsContent } from '../content/ChannelsContent';
+import DiscoveryContent from '../content/DiscoveryContent';
+import EventsContent from '../content/EventsContent';
+import MembersContent from '../content/MembersContent';
+import ChannelsContent from '../content/ChannelsContent';
 
 
 

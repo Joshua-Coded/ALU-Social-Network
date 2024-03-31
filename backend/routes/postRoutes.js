@@ -1,5 +1,6 @@
 // routes/postRoutes.js
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const Post = require('../models/post');
 
@@ -13,11 +14,36 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Matches: POST /api/feed
-router.post('/', async (req, res) => {
-    const { title, body, author = 'Anonymous' } = req.body; // Assuming 'author' will eventually be replaced by authenticated user info
+const authMiddleware = (req, res, next) => {
+    const token = req.headers.authorization?.split(' ')[1]; // Assuming Bearer token
+    if (!token) {
+        return res.status(401).send({ message: "No token, authorization denied" });
+    }
     try {
-        const newPost = new Post({ title, body, author });
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded.user;
+        next();
+    } catch (err) {
+        console.error('Error verifying token:', err); // Added error logging
+        res.status(401).json({ message: 'Token is not valid' });
+    }
+};
+
+
+router.post('/', authMiddleware, async (req, res) => {
+    try {
+        const { title, body } = req.body || {}; // Destructuring with default values
+        const userId = req.user ? req.user.id : null;
+
+        if (!title || !body) {
+            throw new Error('Missing required fields: title or body'); // Throw a specific error
+        }
+
+        const newPost = new Post({
+            title,
+            body,
+            author: userId, // Use the authenticated user's ID
+        });
         await newPost.save();
         res.status(201).json(newPost);
     } catch (error) {

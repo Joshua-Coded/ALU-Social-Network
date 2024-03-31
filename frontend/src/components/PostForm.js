@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export const PostForm = () => {
+export const PostForm = ({ onPostCreated }) => {
     const [post, setPost] = useState({ title: '', body: '' });
 
     const handleChange = (e) => {
@@ -10,6 +10,11 @@ export const PostForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!post.title.trim() || !post.body.trim()) {
+            alert('Please enter a title and body for your post.');
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:5000/api/feed', {
                 method: 'POST',
@@ -21,8 +26,11 @@ export const PostForm = () => {
             }
             const newPost = await response.json();
             alert('Post created successfully');
-            // Optionally clear form & add logic to refresh the list of posts
-            setPost({ title: '', body: '' });
+            setPost({ title: '', body: '' }); // Clear the form
+
+            if (onPostCreated) {
+                onPostCreated(newPost); // Update the list of posts in the parent component
+            }
         } catch (error) {
             console.error("Error creating post:", error);
             alert(error.message);
