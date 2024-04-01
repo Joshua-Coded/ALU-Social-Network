@@ -39,10 +39,11 @@ const Navigation = () => {
                 <div className="search-area">
                     <FiSearch className="search-icon" />
                     <input type="text" className="search-input" placeholder="Search..." />
+                    <button className="account-area" onClick={toggleModal}>
+                        <FiMoreHorizontal /><span>My Account</span>
+                    </button>
                 </div>
-                <button className="account-area" onClick={toggleModal}>
-                    <FiMoreHorizontal /><span>My Account</span>
-                </button>
+
             </div>
             {isModalOpen && (
                 <div className="account-modal">
