@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { FiSearch, FiMoreHorizontal, FiMenu } from 'react-icons/fi';
+import { FiHome, FiUsers, FiMessageSquare, FiBell, FiUser } from 'react-icons/fi';
+import { FiSearch, FiMoreHorizontal } from 'react-icons/fi';
 import LoginForm from './LoginForm';
 import "./Navigation.css";
 import { useAuth } from '../components/context/AuthContext';
@@ -79,32 +80,28 @@ const Navigation = () => {
 
     return (
         <nav className="navigation-container">
-            <button className="hamburger-icon" onClick={toggleNav} aria-label="Toggle navigation">
-                <FiMenu />
-            </button>
-            <div className={isNavVisible ? "links-container active" : "links-container"}>
-                <Link to="/" onClick={() => setIsNavVisible(false)}>Home</Link>
-                <Link to="/about" onClick={() => setIsNavVisible(false)}>About</Link>
-                <Link to="/networks" onClick={() => setIsNavVisible(false)}>Networks</Link>
-                <Link to="/careers" onClick={() => setIsNavVisible(false)}>Careers Portal</Link>
-                <Link to="/resources" onClick={() => setIsNavVisible(false)}>Resources</Link>
-                <Link to="/events" onClick={() => setIsNavVisible(false)}>Events</Link>
-                <Link to="/stories" onClick={() => setIsNavVisible(false)}>Stories</Link>
-            </div>
-            <div className="search-account-area">
+            <div className="logo-and-search">
+                <Link to="/" className="logo-link"><img src="/path-to-your-logo.png" alt="Logo" className="app-logo" /></Link>
                 <div className="search-area">
                     <FiSearch className="search-icon" />
                     <input type="text" className="search-input" placeholder="Search..." />
                 </div>
-                <div className="account-area-container">
-                    <button className="account-area" onClick={toggleModal}>
-                        <FiMoreHorizontal /><span>My Account</span>
-                    </button>
+            </div>
+            <div className="nav-links">
+                <Link to="/home" className="nav-icon-link"><FiHome /><span>Home</span></Link>
+                <Link to="/communities" className="nav-icon-link"><FiUsers /><span>Communities</span></Link>
+                <Link to="/messages" className="nav-icon-link"><FiMessageSquare /><span>Messages</span></Link>
+                <Link to="/notifications" className="nav-icon-link"><FiBell /><span>Notifications</span></Link>
+            </div>
+            <div className="account-area-container">
+                <div className="profile-picture-area" onClick={toggleModal}>
+                    {/* Placeholder for user's profile picture; replace with actual dynamic source */}
+                    <img src="/path-to-users-profile-picture.png" alt="Profile" className="profile-picture" />
+                    <FiMoreHorizontal className="profile-dropdown-icon" />
                 </div>
-
             </div>
             {isModalOpen && (
-                <div className="account-modal">
+                <div className="account-modal" style={getModalStyles()}>
                     {isAuthenticated ? (
                         <ul>
                             <li><Link to="/profile" onClick={() => setIsModalOpen(false)}>My Profile</Link></li>

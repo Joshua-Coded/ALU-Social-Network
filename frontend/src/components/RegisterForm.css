@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.background-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    position: relative;
+    text-align: center;
+    color: white;
+    width: 50%;
+}
+
+.span-us {
+    margin-top: 350px;
+    margin-left: -250px;
+    padding: 100px;
+    letter-spacing: 4;
+}
+
+
+.span-us .small-text {
+    background-color: rgba(222, 158, 75, 0.139);
+    width: 100%;
+    margin-right: 250px !important;
+    border-radius: 7px;
+    margin-left: 550px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.logo-and-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.alu-logo {
+    width: 100px;
+    margin-right: 20px;
+}
+
+.network-text,
+.small-text {
+    margin: 0;
+}
+
+/* Adjusting h1 and paragraph text */
+h1,
+.small-text {
+    max-width: 600px;
+    /* Limits the width of the text for readability */
+    margin: 0 auto;
+    /* Center-aligns the text blocks */
+    padding: 8px 0;
+    /* Gives some padding around the text for spacing */
+}
+
+
+:root {
+    --alu-social-network-color: #007bff;
+    /* Default color, change as needed */
+    --login-link-color: #28a745;
+    /* Default color, change as needed */
+    --create-account-button-bg: #ffc107;
+    /* Default color, change as needed */
+    --terms-privacy-color: #17a2b8;
+    /* Default color, change as needed */
+}
+
+.register-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+    /* Adjust spacing between this container and the background-section */
+}
+
+.register-container h2,
+.register-container p {
+    color: var(--alu-social-network-color);
+}
+
+.span-me {
+    color: var(--login-link-color);
+    /* Color for 'Log In' link and others */
+    cursor: pointer;
+}
+
+.register-button {
+    background-color: var(--create-account-button-bg);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.terms span {
+    color: var(--terms-privacy-color);
+    /* Color for 'Terms of Use' and 'Privacy Policy' */
+}
+
+.form-group input {
+    width: 80%;
+    /* Example: Reduce width to 80% of the form-group's width */
+    /* Keep other properties unchanged */
+    margin: auto;
+    /* Center the input within its container */
+}
+
+
+.form-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    /* Adjust space for error message */
+}
+
+.form-group button {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 1rem;
+}
+
+.google-login-button {
+    background-color: #4285F4;
+    /* Google blue */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    /* Match input width */
+    margin: 20px auto;
+    /* Similar margin for consistency */
+    font-family: 'Roboto', sans-serif;
+    /* Google's font */
+}
+
+.google-icon {
+    margin-right: 10px;
+}
+
+
+
+/* Ensuring the h1 and paragraph are centered within the section */
+@media (min-width: 768px) {
+    .background-section {
+        text-align: left;
+        /* Aligns text to the left on larger screens */
+        align-items: center;
+        /* Centers content horizontally */
+    }
+
+    .logo-and-text {
+        position: absolute;
+        top: 20px;
+        /* Adjust as needed */
+        left: 20px;
+        /* Adjust as needed */
+        width: auto;
+        /* Auto width for absolute positioning */
+    }
+
+    h1,
+    .small-text {
+        text-align: center;
+        /* Centers text for medium and larger screens */
+        margin-left: 50%;
+        /* Pushes the text to the right half */
+        transform: translateX(-50%);
+        /* Correctly centers the block */
+    }
+}

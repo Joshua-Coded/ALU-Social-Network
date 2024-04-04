@@ -8,26 +8,31 @@ const router = express.Router();
 
 // Enhanced Registration endpoint
 router.post('/register', async (req, res) => {
-    const { username, email, password } = req.body;
+    const { firstname, lastname, username, email, password } = req.body;
 
     try {
         console.log('Attempting to register user:', username, email);
 
         const normalizedEmail = email.toLowerCase();
 
+        // Check if email is already in use
         const existingUserByEmail = await User.findOne({ email: normalizedEmail });
         if (existingUserByEmail) {
             console.warn(`Registration failed: Email ${email} is already in use.`);
             return res.status(400).json({ msg: 'Email address is already in use.' });
         }
 
-        const existingUserByUsername = await User.findOne({ username });
+        // Check if username is already taken
+        const existingUserByUsername = await User.findOne({ username }); // Correctly search by username
         if (existingUserByUsername) {
             console.warn(`Registration failed: Username ${username} is already taken.`);
             return res.status(400).json({ msg: 'Username is already taken.' });
         }
 
+        // Creating a new user instance
         const newUser = await new User({
+            firstname,
+            lastname,
             username,
             email: normalizedEmail,
             password,
@@ -35,9 +40,11 @@ router.post('/register', async (req, res) => {
 
         console.log('User registered successfully:', newUser.username, newUser.email);
 
+        // Generate a token
         const payload = { userId: newUser._id };
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '24h' });
 
+        // Respond with success message, token, and user info
         res.status(201).json({
             message: "User registered successfully",
             token,
@@ -48,6 +55,7 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ msg: 'Server error during registration.' });
     }
 });
+
 
 // Enhanced Login endpoint
 router.post('/login', async (req, res) => {

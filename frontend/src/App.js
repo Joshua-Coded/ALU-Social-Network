@@ -13,16 +13,15 @@ import MembersPage from '../src/pages/MembersPage';
 import ChannelsPage from '../src/pages/ChannelsPage';
 import { AuthProvider } from '../src/components/context/AuthContext';
 
-
 function App() {
   return (
     <AuthProvider>
       <Router>
         {/* <Navigation /> */}
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<RegisterForm />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/feed" element={<FeedPage />} />
           <Route path="/discovery" element={<DiscoveryPage />} />
