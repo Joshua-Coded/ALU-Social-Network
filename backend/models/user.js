@@ -12,29 +12,30 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    username: { // Adding the username field
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
-    },
     email: {
         type: String,
         required: true,
         unique: true,
         lowercase: true,
-        trim: true
+        trim: true,
+        validate: {
+            validator: function (email) {
+                return email.endsWith("@alustudent.com");
+            },
+            message: props => `${props.value} is not a valid school email address.`
+        }
     },
     password: {
         type: String,
         required: true
     },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
 }, {
     timestamps: true
 });
 
 userSchema.pre('save', async function (next) {
-    // Only hash the password if it has been modified (or is new)
     if (!this.isModified('password')) return next();
 
     // Generate a salt

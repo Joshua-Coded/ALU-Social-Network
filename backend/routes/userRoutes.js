@@ -3,12 +3,23 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 require('dotenv').config();
+const crypto = require('crypto');
+const transporter = require('../config/nodemailerSetup');
 
 const router = express.Router();
+
+const isValidSchoolEmail = (email) => {
+    return email.endsWith("@alustudent.com");
+};
 
 // Enhanced Registration endpoint
 router.post('/register', async (req, res) => {
     const { firstname, lastname, username, email, password } = req.body;
+
+    if (!isValidSchoolEmail(email)) {
+        return res.status(400).json({ message: "Please use your school email address." });
+    }
+
 
     try {
         console.log('Attempting to register user:', username, email);
@@ -90,5 +101,59 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ msg: 'Server error during login.' });
     }
 });
+
+// POST /api/users/forgot-password
+router.post('/forgot-password', async (req, res) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    if (!user) {
+        return res.status(404).send('User not found.');
+    }
+
+    // Generate a token
+    const resetToken = crypto.randomBytes(20).toString('hex');
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
+
+    await user.save();
+
+    // Send email
+    const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
+    await transporter.sendMail({
+        to: user.email,
+        subject: 'Password Reset',
+        text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n` +
+            `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
+            `${resetUrl} \n\n` +
+            `If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+    });
+
+    res.send('A password reset email has been sent.');
+});
+
+// POST /api/users/reset-password/:token
+router.post('/reset-password/:token', async (req, res) => {
+    const { password } = req.body;
+    const { token } = req.params;
+
+    const user = await User.findOne({
+        resetPasswordToken: token,
+        resetPasswordExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+        return res.status(400).send('Password reset token is invalid or has expired.');
+    }
+
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    await user.save();
+
+    res.send('Your password has been successfully reset.');
+});
+
 
 module.exports = router;

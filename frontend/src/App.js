@@ -12,6 +12,7 @@ import EventsPage from '../src/pages/EventsPage';
 import MembersPage from '../src/pages/MembersPage';
 import ChannelsPage from '../src/pages/ChannelsPage';
 import { AuthProvider } from '../src/components/context/AuthContext';
+import ForgotPasswordForm from './components/ForgotPasswordForm';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/events" element={<EventsPage />} />
           <Route path="/members" element={<MembersPage />} />
           <Route path="/channels" element={<ChannelsPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordForm />} />
         </Routes>
       </Router>
     </AuthProvider>

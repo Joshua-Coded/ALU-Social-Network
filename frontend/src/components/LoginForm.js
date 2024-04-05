@@ -4,6 +4,7 @@ import "./login.css";
 import appLogo from '../images/background.jpeg';
 import backgroundImage from '../images/logo.jpeg';
 import { FcGoogle } from 'react-icons/fc';
+import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
     const [user, setUser] = useState({
@@ -111,7 +112,7 @@ const LoginForm = () => {
                 </form>
 
                 <p>
-                    Forget Password?<span className='span-me'>Reset Password</span>
+                    Forget Password? <Link to="/forgot-password" className='span-me'>Reset Password</Link>
                 </p>
                 {/* onClick={handleGoogleLogin} */}
                 <button className="google-login-button" >

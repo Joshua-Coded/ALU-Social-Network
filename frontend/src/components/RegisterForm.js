@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./register.css";
 import appLogo from '../images/background.jpeg';
-import backgroundImage from '../images/logo.jpeg'; // Ensure these paths are correct
-import { FcGoogle } from 'react-icons/fc'; // Assuming you're using react-icons
+import backgroundImage from '../images/logo.jpeg';
+import { FcGoogle } from 'react-icons/fc';
 
 const RegisterForm = () => {
     const [user, setUser] = useState({
         firstname: '',
         lastname: '',
-        username: '',
         email: '',
         password: '',
     });
@@ -20,21 +19,29 @@ const RegisterForm = () => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setUser((prevUser) => ({
+        setUser(prevUser => ({
             ...prevUser,
             [name]: value,
         }));
     };
 
     const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
+        setShowPassword(showPassword => !showPassword);
+    };
+
+    const isValidSchoolEmail = (email) => {
+        return email.endsWith("@alustudent.com");
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Ensure all fields are filled
-        if (!user.firstname || !user.lastname || !user.username || !user.email || !user.password) {
+        if (!isValidSchoolEmail(user.email)) {
+            setError("Please use your (ALU)  email address.");
+            return;
+        }
+
+        if (!user.firstname || !user.lastname || !user.email || !user.password) {
             setError('Please fill in all fields.');
             return;
         }
@@ -45,13 +52,7 @@ const RegisterForm = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    firstname: user.firstname,
-                    lastname: user.lastname,
-                    username: user.username,
-                    email: user.email,
-                    password: user.password,
-                }),
+                body: JSON.stringify(user), // Removed 'username' from the payload
             });
 
             const data = await response.json();
@@ -60,13 +61,13 @@ const RegisterForm = () => {
                 throw new Error(data.msg || 'Registration failed');
             }
 
-            // Navigate to login upon successful registration
-            navigate('/login');
+            navigate('/login'); // Redirect on successful registration
         } catch (error) {
             console.error('Registration failed:', error);
             setError(error instanceof Error ? error.message : "An unexpected error occurred");
         }
     };
+
 
     return (
         <div className="container">
@@ -106,17 +107,6 @@ const RegisterForm = () => {
                             id="lastName"
                             name="lastname"
                             value={user.lastname}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="username">Username:</label>
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={user.username}
                             onChange={handleChange}
                             required
                         />
