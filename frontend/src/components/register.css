@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 
-
 .container {
     display: flex;
     min-height: 100vh;
+    flex-direction: row;
 }
 
 .background-section {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: flex-start;
     padding: 20px;
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    height: 100;
     position: relative;
     text-align: center;
     color: white;
@@ -27,7 +27,6 @@
     padding: 100px;
     letter-spacing: 4;
 }
-
 
 .span-us .small-text {
     background-color: rgba(222, 158, 75, 0.139);
@@ -186,30 +185,162 @@ h1,
 
 /* Ensuring the h1 and paragraph are centered within the section */
 @media (min-width: 768px) {
-    .background-section {
-        text-align: left;
-        /* Aligns text to the left on larger screens */
+    .container {
+        display: flex;
+        justify-content: space-evenly;
         align-items: center;
-        /* Centers content horizontally */
+    }
+
+    .background-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px;
+        background-size: cover;
+        background-position: center;
+        height: 820px !important;
+        position: relative;
+        text-align: center;
+        color: white;
+        width: 55% !important;
+    }
+
+    .span-us {
+        margin-top: 350px;
+        margin-left: -250px;
+        padding: 100px;
+        letter-spacing: 4;
+    }
+
+
+    .span-us .small-text {
+        background-color: rgba(222, 158, 75, 0.139);
+        width: 100%;
+        margin-right: 250px !important;
+        border-radius: 7px;
+        margin-left: 550px;
+        padding: 10px;
+        margin-top: 10px;
     }
 
     .logo-and-text {
         position: absolute;
-        top: 20px;
-        /* Adjust as needed */
-        left: 20px;
-        /* Adjust as needed */
-        width: auto;
-        /* Auto width for absolute positioning */
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .alu-logo {
+        width: 100px;
+        margin-right: 20px;
+    }
+
+    .network-text,
+    .small-text {
+        margin: 0;
     }
 
     h1,
     .small-text {
-        text-align: center;
-        /* Centers text for medium and larger screens */
-        margin-left: 50%;
-        /* Pushes the text to the right half */
-        transform: translateX(-50%);
-        /* Correctly centers the block */
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 8px 0;
     }
+
+
+    :root {
+        --welcome-color: black;
+        --login-link-color: rgb(233, 164, 17);
+        --create-account-button-bg: rgb(233, 164, 17);
+        --terms-privacy-color: rgb(233, 164, 17);
+    }
+
+    .login-container {
+        background: white;
+        padding: 80px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 25%;
+    }
+
+    .login-container h2,
+    .login-container p {
+        color: var(--welcome-color);
+    }
+
+    .span-me {
+        color: var(--login-link-color);
+        cursor: pointer;
+    }
+
+    .login-button {
+        background-color: var(--create-account-button-bg);
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        display: block;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .terms span {
+        color: var(--login-link-color);
+
+    }
+
+    /* .form-group {
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    .form-group input {
+        width: 0%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    } */
+
+    .form-group button {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .error-message {
+        color: red;
+        margin-bottom: 1rem;
+    }
+
+    .google-login-button {
+        background-color: white;
+        color: black;
+        border: 2px solid whitesmoke;
+        padding: 10px 15px;
+        border-radius: 7px;
+        cursor: pointer;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin: 20px auto;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .google-icon {
+        margin-right: 10px;
+    }
+
 }

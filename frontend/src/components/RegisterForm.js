@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./RegisterForm.css";
+import "./register.css";
 import appLogo from '../images/background.jpeg';
-import backgroundImage from '../images/logo.jpeg';
-import { FcGoogle } from 'react-icons/fc';
-
-
+import backgroundImage from '../images/logo.jpeg'; // Ensure these paths are correct
+import { FcGoogle } from 'react-icons/fc'; // Assuming you're using react-icons
 
 const RegisterForm = () => {
     const [user, setUser] = useState({
@@ -33,17 +31,16 @@ const RegisterForm = () => {
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault(); // Prevent the default form submission behavior
+        event.preventDefault();
 
-        // Example validation
-        if (!user.username || !user.email || !user.password) {
+        // Ensure all fields are filled
+        if (!user.firstname || !user.lastname || !user.username || !user.email || !user.password) {
             setError('Please fill in all fields.');
             return;
         }
 
         try {
-            // Example API call to register the user
-            const response = await fetch('http://localhost:5000/api/register', {
+            const response = await fetch('http://localhost:5000/api/users/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,16 +60,13 @@ const RegisterForm = () => {
                 throw new Error(data.msg || 'Registration failed');
             }
 
-            // Handle successful registration
-            // Redirect the user or clear the form
-            navigate('/login'); // Example redirection after successful registration
+            // Navigate to login upon successful registration
+            navigate('/login');
         } catch (error) {
             console.error('Registration failed:', error);
-            setError(error.message);
+            setError(error instanceof Error ? error.message : "An unexpected error occurred");
         }
     };
-
-
 
     return (
         <div className="container">
@@ -99,8 +93,8 @@ const RegisterForm = () => {
                         <input
                             type="text"
                             id="firstName"
-                            name="firstName"
-                            value={user.firstName}
+                            name="firstname"
+                            value={user.firstname}
                             onChange={handleChange}
                             required
                         />
@@ -110,8 +104,8 @@ const RegisterForm = () => {
                         <input
                             type="text"
                             id="lastName"
-                            name="lastName"
-                            value={user.lastName}
+                            name="lastname"
+                            value={user.lastname}
                             onChange={handleChange}
                             required
                         />
