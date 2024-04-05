@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 
-/* Apply base styles first, assuming they are for mobile views */
+/* mobile views */
 .container {
     display: flex;
     flex-direction: column;
