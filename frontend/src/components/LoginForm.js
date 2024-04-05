@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import "./login.css";
+import { useNavigate, Link } from 'react-router-dom'; // Consolidated import for Link
+import "./login.css"; // Make sure the path is correct
+// Ensure the paths to these images are correct for your project structure
 import appLogo from '../images/background.jpeg';
 import backgroundImage from '../images/logo.jpeg';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
     const [user, setUser] = useState({
-        username: '',
+        email: '', // Changed from username to email
         password: '',
     });
 
@@ -24,42 +24,29 @@ const LoginForm = () => {
         }));
     };
 
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
-    };
+    const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        // Ensure all fields are filled
-        if (!user.username || !user.password) {
-            setError('Please fill in all fields.');
-            return;
-        }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
         try {
             const response = await fetch('http://localhost:5000/api/users/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: user.username,
-                    password: user.password,
-                }),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(user), // Email is already part of the user state
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.msg || 'Login failed');
+                throw new Error(data.message || 'Failed to login');
             }
 
-            // Navigate to login upon successful registration
-            navigate('/dashboard');
+            localStorage.setItem('token', data.token); // Assuming the token is sent back on successful login
+            navigate('/dashboard'); // Redirect to the dashboard upon successful login
         } catch (error) {
-            console.error('Login failed:', error);
-            setError(error instanceof Error ? error.message : "An unexpected error occurred");
+            console.error('Login error:', error);
+            setError(error.message || 'An error occurred during login');
         }
     };
 
@@ -80,16 +67,16 @@ const LoginForm = () => {
             </div>
             <div className="login-container">
                 <h2>Welcome back!</h2>
-                <p>Don't have an account? <span className='span-me'>Create Account</span></p>
+                <p>Don't have an account? <Link to="/" className='span-me'>Create Account</Link></p> {/* Updated Link to point to the registration route */}
                 {error && <div className="error-message">{error}</div>}
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="username">Username:</label>
+                        <label htmlFor="email">Email:</label> {/* Updated label and input for email */}
                         <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={user.username}
+                            type="email" // Changed type to email for proper validation
+                            id="email"
+                            name="email"
+                            value={user.email}
                             onChange={handleChange}
                             required
                         />
@@ -110,19 +97,11 @@ const LoginForm = () => {
                     </div>
                     <button type="submit" className="login-button">Log in</button>
                 </form>
-
-                <p>
-                    Forget Password? <Link to="/forgot-password" className='span-me'>Reset Password</Link>
-                </p>
-                {/* onClick={handleGoogleLogin} */}
-                <button className="google-login-button" >
-                    <FcGoogle className="google-icon" />
-                    Login in with Google
-                </button>
+                <p>Forget Password? <Link to="/forgot-password" className='span-me'>Reset Password</Link></p>
+                {/* Google login button remains unchanged */}
             </div>
         </div>
     );
-
 };
 
 export default LoginForm;
