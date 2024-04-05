@@ -1,121 +1,81 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { FiHome, FiUsers, FiMessageSquare, FiBell, FiUser } from 'react-icons/fi';
-import { FiSearch, FiMoreHorizontal } from 'react-icons/fi';
-import LoginForm from './LoginForm';
+import { Link, useNavigate } from 'react-router-dom';
+import { FiHome, FiUsers, FiMessageSquare, FiBell, FiSearch, FiMoreHorizontal } from 'react-icons/fi';
 import "./Navigation.css";
 import { useAuth } from '../components/context/AuthContext';
+import LoginForm from './LoginForm';
+import appLogo from '../images/background.jpeg';
 
 const Navigation = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalContent, setModalContent] = useState('');
-    const [isNavVisible, setIsNavVisible] = useState(false);
+    const [showProfileDropdown, setShowProfileDropdown] = useState(false);
     const navigate = useNavigate();
     const { isAuthenticated, logout } = useAuth();
-
-    // const toggleModal = () => setIsModalOpen(!isModalOpen);
-    const toggleNav = () => setIsNavVisible(!isNavVisible);
-
 
     const handleLogout = () => {
         logout();
         navigate('/');
     };
 
-    const toggleModal = (event) => {
-        // Prevents the event from bubbling up to the document body
-        event.stopPropagation();
-        setIsModalOpen(!isModalOpen);
+    const toggleProfileDropdown = (event) => {
+        event.stopPropagation(); // Prevent event from bubbling up
+        setShowProfileDropdown(!showProfileDropdown);
     };
 
-
-
-    const getModalStyles = () => {
-        if (['login', 'register'].includes(modalContent)) {
-            return {
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                maxWidth: '400px',
-                backgroundColor: '#fff',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)',
-                padding: '20px',
-                zIndex: 1050,
-            };
-        } else { // 'accountDetails' or any other content
-            return {
-                position: 'absolute',
-                top: '100%',
-                left: '0',
-                transform: 'translateY(10px)',
-                width: '200px',
-                backgroundColor: '#fff',
-                borderRadius: '8px',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)',
-                padding: '20px',
-                zIndex: 1050,
-            };
-        }
-    };
+    // event listener to close the dropdown when clicking outside
     useEffect(() => {
         const handleOutsideClick = (event) => {
-            if (isModalOpen && !event.target.closest('.account-modal') && !event.target.closest('.account-area')) {
-                setIsModalOpen(false);
+            if (!event.target.closest('.profile-dropdown') && !event.target.closest('.account-area')) {
+                setShowProfileDropdown(false);
             }
         };
 
-        if (isModalOpen) {
-            document.addEventListener('click', handleOutsideClick);
-        }
-
+        document.addEventListener('click', handleOutsideClick);
         return () => {
             document.removeEventListener('click', handleOutsideClick);
         };
-    }, [isModalOpen]);
-
-
+    }, []);
 
     return (
         <nav className="navigation-container">
             <div className="logo-and-search">
-                <Link to="/" className="logo-link"><img src="/path-to-your-logo.png" alt="Logo" className="app-logo" /></Link>
+                <Link to="/" className="logo-link">
+                    <img src={appLogo} alt="ALU SN" className="app-logo" />
+                    <h1>ALU SN</h1>
+                </Link>
                 <div className="search-area">
                     <FiSearch className="search-icon" />
-                    <input type="text" className="search-input" placeholder="Search..." />
+                    <input type="text" className="search-input" placeholder="Search here..." />
                 </div>
             </div>
             <div className="nav-links">
                 <Link to="/home" className="nav-icon-link"><FiHome /><span>Home</span></Link>
                 <Link to="/communities" className="nav-icon-link"><FiUsers /><span>Communities</span></Link>
                 <Link to="/messages" className="nav-icon-link"><FiMessageSquare /><span>Messages</span></Link>
-                <Link to="/notifications" className="nav-icon-link"><FiBell /><span>Notifications</span></Link>
-            </div>
-            <div className="account-area-container">
-                <div className="profile-picture-area" onClick={toggleModal}>
-                    {/* Placeholder for user's profile picture; replace with actual dynamic source */}
-                    <img src="/path-to-users-profile-picture.png" alt="Profile" className="profile-picture" />
-                    <FiMoreHorizontal className="profile-dropdown-icon" />
-                </div>
-            </div>
-            {isModalOpen && (
-                <div className="account-modal" style={getModalStyles()}>
-                    {isAuthenticated ? (
-                        <ul>
-                            <li><Link to="/profile" onClick={() => setIsModalOpen(false)}>My Profile</Link></li>
-                            <li><Link to="/settings" onClick={() => setIsModalOpen(false)}>Settings</Link></li>
-                            <li><button onClick={handleLogout}>Logout</button></li>
-                        </ul>
-                    ) : (
-                        <LoginForm onLoginSuccess={() => {
-                            setIsModalOpen(false);
-                            navigate('/dashboard');
-                        }} />
+                <div className="nav-icon-link bell-icon"><FiBell /></div>
+                <div className="account-area">
+
+                    <div onClick={toggleProfileDropdown} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                        <img src={appLogo} alt="Profile" className="profile-picture" />
+                        <FiMoreHorizontal className="profile-dropdown-icon" />
+                    </div>
+                    {showProfileDropdown && (
+                        <div className="profile-dropdown">
+                            {isAuthenticated ? (
+                                <>
+                                    <Link to="/profile" onClick={() => setShowProfileDropdown(false)}>My Profile</Link>
+                                    <Link to="/settings" onClick={() => setShowProfileDropdown(false)}>Settings</Link>
+                                    <button onClick={() => { handleLogout(); setShowProfileDropdown(false); }}>Logout</button>
+                                </>
+                            ) : (
+                                <LoginForm onLoginSuccess={() => {
+                                    setShowProfileDropdown(false);
+                                    navigate('/dashboard');
+                                }} />
+                            )}
+                        </div>
                     )}
                 </div>
-            )}
+            </div>
         </nav>
     );
 };
