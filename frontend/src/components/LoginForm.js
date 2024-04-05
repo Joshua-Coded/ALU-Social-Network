@@ -67,13 +67,13 @@ const LoginForm = () => {
             </div>
             <div className="login-container">
                 <h2>Welcome back!</h2>
-                <p>Don't have an account? <Link to="/" className='span-me'>Create Account</Link></p> {/* Updated Link to point to the registration route */}
+                <p>Don't have an account? <Link to="/" className='span-me'>Create Account</Link></p>
                 {error && <div className="error-message">{error}</div>}
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="email">Email:</label> {/* Updated label and input for email */}
+                        <label htmlFor="email">Email:</label>
                         <input
-                            type="email" // Changed type to email for proper validation
+                            type="email"
                             id="email"
                             name="email"
                             value={user.email}

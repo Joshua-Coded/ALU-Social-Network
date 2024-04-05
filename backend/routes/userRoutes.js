@@ -68,7 +68,7 @@ router.post('/register', async (req, res) => {
 });
 
 
-// Enhanced Login endpoint
+// Login endpoint
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const normalizedEmail = email.toLowerCase();
@@ -88,19 +88,20 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ msg: 'Invalid credentials.' });
         }
 
-        console.log(`Login successful for user: ${user.username}`);
+        console.log(`Login successful for user: ${email}`); // Logging the email directly
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
         res.json({
             message: "Login successful",
             token,
-            user: { id: user._id, username: user.username, email: user.email },
+            user: { id: user._id, email }, // Sending email directly in the response
         });
     } catch (error) {
         console.error(`Error during login for ${normalizedEmail}:`, error);
         res.status(500).json({ msg: 'Server error during login.' });
     }
 });
+
 
 // POST /api/users/forgot-password
 router.post('/forgot-password', async (req, res) => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import "./register.css";
 import appLogo from '../images/background.jpeg';
 import backgroundImage from '../images/logo.jpeg';
@@ -86,7 +86,8 @@ const RegisterForm = () => {
             </div>
             <div className="register-container">
                 <h2>Welcome to <br /> <span className='span-me'>ALU Social Network.</span></h2>
-                <p>Already have an account ? <span className='span-me'>Log In</span></p>
+                <p>Have an account? <Link to="/login" className='span-me'>Login here</Link></p>
+
                 {error && <div className="error-message">{error}</div>}
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
