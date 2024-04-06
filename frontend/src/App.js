@@ -6,13 +6,13 @@ import LoginForm from '../src/components/LoginForm';
 import RegisterForm from '../src/components/RegisterForm';
 // import Dashboard from '../src/pages/Dashboard';
 import Dashboard from '../src/components/Dashboard/Dashboard';
-import FeedPage from '../src/pages/FeedPage';
-import DiscoveryPage from '../src/pages/DiscoveryPage';
-import EventsPage from '../src/pages/EventsPage';
-import MembersPage from '../src/pages/MembersPage';
-import ChannelsPage from '../src/pages/ChannelsPage';
+import Messages from './pages/Messages';
+import Event from './pages/Event';
+import Thread from './pages/Thread';
+import Announcements from './pages/ Announcements';
 import { AuthProvider } from '../src/components/context/AuthContext';
 import ForgotPasswordForm from './components/ForgotPasswordForm';
+import Vibe from './pages/Vibe';
 
 function App() {
   return (
@@ -24,11 +24,11 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/feed" element={<FeedPage />} />
-          <Route path="/discovery" element={<DiscoveryPage />} />
-          <Route path="/events" element={<EventsPage />} />
-          <Route path="/members" element={<MembersPage />} />
-          <Route path="/channels" element={<ChannelsPage />} />
+          <Route path="/announcements" element={<Announcements />} />
+          <Route path="/vibes" element={<Vibe />} />
+          <Route path="/event" element={<Event />} />
+          <Route path="/thread" element={<Thread />} />
+          <Route path="/messages" element={<Messages />} />
           <Route path="/forgot-password" element={<ForgotPasswordForm />} />
         </Routes>
       </Router>

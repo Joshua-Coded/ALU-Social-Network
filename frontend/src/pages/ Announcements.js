@@ -1,7 +1,7 @@
 import React from 'react';
 
-const ChannelsPage = () => {
+const Announcements = () => {
     return <div><h2>Channels Page</h2></div>;
 };
 
-export default ChannelsPage;
+export default Announcements;

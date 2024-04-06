@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDashboard } from '../context/DashboardContext';
 import './LeftSidebar.css';
+import { FiBell, FiZap, FiCalendar, FiMessageSquare } from 'react-icons/fi';
 
 const LeftSidebar = () => {
     const { currentView, setCurrentView } = useDashboard();
@@ -9,34 +10,34 @@ const LeftSidebar = () => {
         <div className="left-sidebar">
             <ul className="sidebar-links">
                 <li
-                    className={currentView === 'Feed' ? 'active' : ''}
-                    onClick={() => setCurrentView('Feed')}
+                    className={currentView === 'Announcements' ? 'active' : ''}
+                    onClick={() => setCurrentView('Announcements')}
                 >
-                    Feed
+                    <FiBell /> Announcements
                 </li>
                 <li
-                    className={currentView === 'Discovery' ? 'active' : ''}
-                    onClick={() => setCurrentView('Discovery')}
+                    className={currentView === 'Vibe' ? 'active' : ''}
+                    onClick={() => setCurrentView('Vibe')}
                 >
-                    Discovery
+                    <FiZap /> Vibe
                 </li>
                 <li
-                    className={currentView === 'Events' ? 'active' : ''}
-                    onClick={() => setCurrentView('Events')}
+                    className={currentView === 'Event' ? 'active' : ''}
+                    onClick={() => setCurrentView('Event')}
                 >
-                    Events
+                    <FiCalendar /> Event
                 </li>
                 <li
-                    className={currentView === 'Members' ? 'active' : ''}
-                    onClick={() => setCurrentView('Members')}
+                    className={currentView === 'Thread' ? 'active' : ''}
+                    onClick={() => setCurrentView('Thread')}
                 >
-                    Members
+                    <FiMessageSquare /> Thread
                 </li>
-                <li
-                    className={currentView === 'Channels' ? 'active' : ''}
-                    onClick={() => setCurrentView('Channels')}
-                >
-                    Channels
+                <li>
+                    <span className="faded"> Communities</span>
+                </li>
+                <li>
+                    <span className="faded"> Direct Messages</span>
                 </li>
             </ul>
         </div>
