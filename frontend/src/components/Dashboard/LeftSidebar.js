@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDashboard } from '../context/DashboardContext';
-import { FiHome, FiUsers, FiMail, FiBell, FiBookOpen, FiLifeBuoy, FiAlertOctagon } from 'react-icons/fi'; // Assuming you're using react-icons for icons
+import { FiHome, FiBookOpen, FiLifeBuoy, FiAlertOctagon } from 'react-icons/fi';
 import './LeftSidebar.css';
 
 const LeftSidebar = ({ className }) => {
@@ -13,10 +13,10 @@ const LeftSidebar = ({ className }) => {
                     <FiHome /> Announcements
                 </li>
                 <li className={activeSection === 'Vibe' ? 'active' : ''} onClick={() => changeSection('Vibe')}>
-                    <FiLifeBuoy /> Vibe
+                    <FiLifeBuoy /> Vibes
                 </li>
                 <li className={activeSection === 'Event' ? 'active' : ''} onClick={() => changeSection('Event')}>
-                    <FiBookOpen />Event
+                    <FiBookOpen />Events
                 </li>
                 <li className={activeSection === 'Thread' ? 'active' : ''} onClick={() => changeSection('Thread')}>
                     <FiAlertOctagon />Thread
@@ -25,10 +25,10 @@ const LeftSidebar = ({ className }) => {
                 <div className="separator"></div> {/* This div acts as a separator */}
 
                 <li className="faded" onClick={() => changeSection('Communities')}>
-                    <FiUsers /> Communities
+                    Communities
                 </li>
                 <li className="faded" onClick={() => changeSection('DirectMessages')}>
-                    <FiMail /> Direct Messages
+                    Direct Messages
                 </li>
 
 
