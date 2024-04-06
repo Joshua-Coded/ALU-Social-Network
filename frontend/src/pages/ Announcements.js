@@ -1,37 +1,52 @@
-import React from 'react';
+// components/CreateAnnouncementForm.js
+import React, { useState } from 'react';
 
-const MainPage = () => {
-    const announcements = [
-        {
-            id: 1,
-            title: "Welcome to ALU SN!",
-            content: "We're excited to have you on our social network. Stay tuned for more updates.",
-            date: "2023-04-05",
-        },
-        {
-            id: 2,
-            title: "Upcoming Event: Tech Talk",
-            content: "Join us for a tech talk on the latest trends in technology. Date: 2023-04-15.",
-            date: "2023-04-06",
-        },
-    ];
+const CreateAnnouncementForm = () => {
+    const [announcementData, setAnnouncementData] = useState({
+        title: '',
+        content: '',
+        announcementImage: null,
+    });
 
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        if (name === 'announcementImage') {
+            setAnnouncementData({ ...announcementData, [name]: event.target.files[0] });
+        } else {
+            setAnnouncementData({ ...announcementData, [name]: value });
+        }
+    };
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData();
+        formData.append('title', announcementData.title);
+        formData.append('content', announcementData.content);
+        formData.append('announcementImage', announcementData.announcementImage);
+        // Assuming you're saving the userId somehow (e.g., in localStorage)
+        formData.append('userId', localStorage.getItem('userId'));
+
+        try {
+            const response = await fetch('/api/announcements', {
+                method: 'POST',
+                body: formData, // FormData will set the `Content-Type` to `multipart/form-data`
+            });
+            const data = await response.json();
+            console.log(data);
+            // Handle success (e.g., redirecting to announcements page)
+        } catch (error) {
+            console.error('Error creating announcement:', error);
+            // Handle error
+        }
+    };
 
     return (
-        <div className="main-content">
-            <h2>Announcements</h2>
-            <ul>
-                {announcements.map(announcement => (
-                    <li key={announcement.id}>
-                        <h3>{announcement.title}</h3>
-                        <p>{announcement.content}</p>
-                        <small>{announcement.date}</small>
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+            {/* Title, content, and image inputs */}
+            <button type="submit">Post Announcement</button>
+        </form>
     );
 };
 
-export default MainPage;
+export default CreateAnnouncementForm;
