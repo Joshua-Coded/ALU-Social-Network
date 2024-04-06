@@ -4,7 +4,6 @@ const Vibe = () => {
     return (
         <div>
             <h1>Vibe</h1>
-            {/* Content goes here */}
         </div>
     );
 };

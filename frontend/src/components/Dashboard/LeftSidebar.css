@@ -29,7 +29,6 @@
 
 .sidebar-links li:not(:last-child) {
     border-bottom: 1px solid #ebedf0;
-    /* Lighter gray line for separation */
 }
 
 .sidebar-links li.active {
@@ -64,9 +63,7 @@
     border-bottom: none;
 }
 
-/* Styling for the section titles if needed */
 .sidebar-section-title {
     font-weight: bold;
     margin: 20px 0 10px 0;
-    /* Space before section title */
 }

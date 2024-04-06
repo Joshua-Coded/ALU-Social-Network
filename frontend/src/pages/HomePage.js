@@ -1,16 +1,24 @@
 // src/pages/HomePage.js
 import React from 'react';
-import Header from '../components/Header';
+import { DashboardProvider } from '../components/context/DashboardContext';
 import Navigation from '../components/Navigation';
-import MainContent from '../components/MainContent';
+import LeftSidebar from '../components/Dashboard/LeftSidebar';
+import MainPage from '../components/Dashboard/MainPage';
+import RightSidebar from '../components/Dashboard/RightSidebar';
+import './HomePage.css';
+
 
 const HomePage = () => (
-    <>
-        <Header />
-        <Navigation />
-        <MainContent />
-        {/* Footer component goes here */}
-    </>
+    <DashboardProvider>
+        <>
+            <Navigation />
+            <div className="dashboard-layout">
+                <LeftSidebar />
+                <MainPage />
+                <RightSidebar />
+            </div>
+        </>
+    </DashboardProvider>
 );
 
 export default HomePage;

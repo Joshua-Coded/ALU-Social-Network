@@ -5,10 +5,14 @@ const DashboardContext = createContext();
 export const useDashboard = () => useContext(DashboardContext);
 
 export const DashboardProvider = ({ children }) => {
-    const [currentView, setCurrentView] = useState('Feed');
+    const [activeSection, setActiveSection] = useState('Announcements');
+
+    const changeSection = (section) => {
+        setActiveSection(section);
+    };
 
     return (
-        <DashboardContext.Provider value={{ currentView, setCurrentView }}>
+        <DashboardContext.Provider value={{ activeSection, changeSection }}>
             {children}
         </DashboardContext.Provider>
     );

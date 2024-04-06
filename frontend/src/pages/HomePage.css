@@ -1,7 +1,6 @@
-.dashboard-layout {
+.dashboard-container {
     display: flex;
     min-height: 100vh;
-    background-color: whitesmoke;
 }
 
 .left-sidebar {

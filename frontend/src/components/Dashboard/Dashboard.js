@@ -5,17 +5,15 @@ import MainPage from './MainPage';
 import RightSidebar from './RightSidebar';
 import './Dashboard.css';
 import Navigation from '../Navigation';
-import { AuthProvider } from '../context/AuthContext';
 
 const Dashboard = () => {
     return (
         <DashboardProvider>
-            <AuthProvider><Navigation /></AuthProvider>
-
-            <div className="dashboard-container">
-                <LeftSidebar />
-                <MainPage />
-                <RightSidebar />
+            <Navigation />
+            <div className="dashboard-layout">
+                <LeftSidebar className="left-sidebar" />
+                <MainPage className="main-page" />
+                <RightSidebar className="right-sidebar" />
             </div>
         </DashboardProvider>
     );
