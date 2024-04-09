@@ -8,96 +8,99 @@ const transporter = require('../config/nodemailerSetup');
 
 const router = express.Router();
 
+
+// valid email address
 const isValidSchoolEmail = (email) => {
-    return email.endsWith("@alustudent.com");
+    return email.match(/^[a-zA-Z0-9._%+-]+@(alustudent\.com|alueducation\.com)$/);
 };
 
-// Enhanced Registration endpoint
+
 router.post('/register', async (req, res) => {
     const { firstname, lastname, username, email, password } = req.body;
 
-    if (!isValidSchoolEmail(email)) {
-        return res.status(400).json({ message: "Please use your school email address." });
+    // Log the registration attempt
+    console.log(`Attempting to register user with email: ${email} and username: ${username}`);
+
+    if (!isValidSchoolEmail(email.toLowerCase())) {
+        console.log(`Registration attempt failed: Invalid email ${email}`);
+        return res.status(400).json({ message: "Please use a valid school or staff email address." });
     }
 
 
     try {
-        console.log('Attempting to register user:', username, email);
-
-        const normalizedEmail = email.toLowerCase();
-
-        // Check if email is already in use
-        const existingUserByEmail = await User.findOne({ email: normalizedEmail });
+        const existingUserByEmail = await User.findOne({ email: email.toLowerCase() });
         if (existingUserByEmail) {
-            console.warn(`Registration failed: Email ${email} is already in use.`);
-            return res.status(400).json({ msg: 'Email address is already in use.' });
+            console.log(`Registration failed: Email ${email} is already in use.`);
+            return res.status(400).json({ message: 'Email address is already in use.' });
         }
 
-        // Check if username is already taken
-        const existingUserByUsername = await User.findOne({ username }); // Correctly search by username
+        const existingUserByUsername = await User.findOne({ username: username.toLowerCase() });
         if (existingUserByUsername) {
-            console.warn(`Registration failed: Username ${username} is already taken.`);
-            return res.status(400).json({ msg: 'Username is already taken.' });
+            console.log(`Registration failed: Username ${username} is already taken.`);
+            return res.status(400).json({ message: 'Username is already taken.' });
         }
 
-        // Creating a new user instance
-        const newUser = await new User({
+        // Hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // Create and save the new user
+        const newUser = new User({
             firstname,
             lastname,
-            username,
-            email: normalizedEmail,
-            password,
-        }).save();
-
-        console.log('User registered successfully:', newUser.username, newUser.email);
+            username: username.toLowerCase(),
+            email: email.toLowerCase(),
+            password: hashedPassword,
+        });
+        await newUser.save();
 
         // Generate a token
-        const payload = { userId: newUser._id };
-        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '24h' });
+        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
-        // Respond with success message, token, and user info
+        console.log(`User registered successfully: ${username} (${email})`);
+
+        // Respond with the registration success message
         res.status(201).json({
-            message: "User registered successfully",
+            message: "Registration successful",
             token,
-            user: { id: newUser._id, username: newUser.username, email: newUser.email },
+            user: {
+                id: newUser._id,
+                firstname: newUser.firstname,
+                lastname: newUser.lastname,
+                username: newUser.username,
+                email: newUser.email,
+            },
         });
     } catch (error) {
-        console.error(`Error in user registration for ${username}:`, error.message);
-        res.status(500).json({ msg: 'Server error during registration.' });
+        console.error(`Error in user registration for ${username} (${email}):`, error);
+        res.status(500).json({ message: 'Server error during registration.' });
     }
 });
 
-
 // Login endpoint
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-    const normalizedEmail = email.toLowerCase();
+    const { username, password } = req.body; // Use username instead of email
 
     try {
-        console.log(`Login attempt for: ${normalizedEmail}`);
+        console.log(`Login attempt for: ${username}`);
 
-        const user = await User.findOne({ email: normalizedEmail });
+        const user = await User.findOne({ username }); // Find user by username
         if (!user) {
-            console.warn(`Login failed: No user found with email ${normalizedEmail}`);
+            console.warn(`Login failed: No user found with username ${username}`);
             return res.status(400).json({ msg: 'Invalid credentials.' });
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            console.warn(`Login failed: Password mismatch for user ${normalizedEmail}`);
-            return res.status(400).json({ msg: 'Invalid credentials.' });
-        }
 
-        console.log(`Login successful for user: ${email}`); // Logging the email directly
+        console.log(`Login successful for user: ${username}`); // Logging the username directly
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
         res.json({
             message: "Login successful",
             token,
-            user: { id: user._id, email }, // Sending email directly in the response
+            user: { id: user._id, username }, // Include username in the successful login response
         });
     } catch (error) {
-        console.error(`Error during login for ${normalizedEmail}:`, error);
+        console.error(`Error during login for ${username}:`, error);
         res.status(500).json({ msg: 'Server error during login.' });
     }
 });

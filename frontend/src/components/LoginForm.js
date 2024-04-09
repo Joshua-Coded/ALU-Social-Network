@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // Consolidated import for Link
-import "./login.css"; // Make sure the path is correct
-// Ensure the paths to these images are correct for your project structure
+import { useNavigate, Link } from 'react-router-dom';
+import "./login.css";
 import appLogo from '../images/background.jpeg';
 import backgroundImage from '../images/logo.jpeg';
 import { FcGoogle } from 'react-icons/fc';
 
 const LoginForm = () => {
     const [user, setUser] = useState({
-        email: '', // Changed from username to email
+        username: '', // Use username instead of email
         password: '',
     });
 
@@ -33,7 +32,10 @@ const LoginForm = () => {
             const response = await fetch('http://localhost:5000/api/users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(user), // Email is already part of the user state
+                body: JSON.stringify({
+                    username: user.username, // Send username
+                    password: user.password,
+                }),
             });
 
             const data = await response.json();
@@ -42,7 +44,8 @@ const LoginForm = () => {
                 throw new Error(data.message || 'Failed to login');
             }
 
-            localStorage.setItem('token', data.token); // Assuming the token is sent back on successful login
+            // Assuming the token is sent back on successful login
+            localStorage.setItem('token', data.token);
             navigate('/dashboard'); // Redirect to the dashboard upon successful login
         } catch (error) {
             console.error('Login error:', error);
@@ -57,26 +60,19 @@ const LoginForm = () => {
                     <img src={appLogo} alt="ALU Logo" className="alu-logo" />
                     <p className="network-text">ALU Social Network</p>
                 </span>
-                <span className='span-us'>
-                    <h1>Building Bridges, <br /> and Fostering Community</h1>
-                    <p className='small-text'>ALU Social Network is your one-stop platform for fostering <br />
-                        connections and building a vibrant community within the ALU <br />
-                        ecosystem. Connect with fellow student and alumni, explore mentorship opportunities, and engage in meaningful discussion - all <br />
-                        designed to enhance your professional growth, networking, and sense of belonging at ALU.</p>
-                </span>
             </div>
             <div className="login-container">
                 <h2>Welcome back!</h2>
-                <p>Don't have an account? <Link to="/" className='span-me'>Create Account</Link></p>
+                <p>Don't have an account? <Link to="/register" className='span-me'>Create Account</Link></p>
                 {error && <div className="error-message">{error}</div>}
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="email">Email:</label>
+                        <label htmlFor="username">Username:</label>
                         <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={user.email}
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={user.username}
                             onChange={handleChange}
                             required
                         />
@@ -98,7 +94,6 @@ const LoginForm = () => {
                     <button type="submit" className="login-button">Log in</button>
                 </form>
                 <p>Forget Password? <Link to="/forgot-password" className='span-me'>Reset Password</Link></p>
-                {/* Google login button remains unchanged */}
             </div>
         </div>
     );

@@ -2,8 +2,20 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const fs = require('fs');
+const path = require('path');
 const postRoutes = require('./routes/postRoutes');
 const userRoutes = require('./routes/userRoutes');
+const announcementRoutes = require('./routes/announcementRoutes');
+
+// Check and create uploads directory
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+    console.log('Created uploads directory');
+} else {
+    console.log('Uploads directory already exists');
+}
 
 const app = express();
 
@@ -26,10 +38,13 @@ mongoose.connect(process.env.MONGODB_URI, {
     console.error('Could not connect to MongoDB:', err);
 });
 
-// Register routes
+// Serve files from uploads directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Register routes
 app.use('/api/users', userRoutes); // User routes
 app.use('/api/feed', postRoutes); // Post routes
+app.use('/api/announcements', announcementRoutes);
 
 // Fallback route for undefined paths
 app.use((req, res) => {

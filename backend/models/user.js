@@ -12,6 +12,12 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true
+    },
     email: {
         type: String,
         required: true,
@@ -20,9 +26,9 @@ const userSchema = new mongoose.Schema({
         trim: true,
         validate: {
             validator: function (email) {
-                return email.endsWith("@alustudent.com");
+                return /@alueducation\.com$|@alustudent\.com$/.test(email); // Allows emails ending in @alu.com or @alustudent.com
             },
-            message: props => `${props.value} is not a valid school email address.`
+            message: props => `${props.value} is not a valid organization email address. Please use your ALU or student email.`
         }
     },
     password: {
@@ -38,9 +44,7 @@ const userSchema = new mongoose.Schema({
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
 
-    // Generate a salt
     const salt = await bcrypt.genSalt(10);
-    // Hash the password using our new salt
     this.password = await bcrypt.hash(this.password, salt);
 
     next();

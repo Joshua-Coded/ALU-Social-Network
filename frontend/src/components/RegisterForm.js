@@ -9,6 +9,7 @@ const RegisterForm = () => {
     const [user, setUser] = useState({
         firstname: '',
         lastname: '',
+        username: '',
         email: '',
         password: '',
     });
@@ -26,22 +27,21 @@ const RegisterForm = () => {
     };
 
     const togglePasswordVisibility = () => {
-        setShowPassword(showPassword => !showPassword);
+        setShowPassword(!showPassword);
     };
 
     const isValidSchoolEmail = (email) => {
-        return email.endsWith("@alustudent.com");
+        return email.endsWith("@alustudent.com") || email.endsWith("@alueducation.com");
     };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (!isValidSchoolEmail(user.email)) {
-            setError("Please use your (ALU)  email address.");
+            setError("Please use your (ORGANIZATION OR SCHOOL) email address.");
             return;
         }
 
-        if (!user.firstname || !user.lastname || !user.email || !user.password) {
+        if (!user.firstname || !user.lastname || !user.username || !user.email || !user.password) {
             setError('Please fill in all fields.');
             return;
         }
@@ -52,13 +52,13 @@ const RegisterForm = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(user), // Removed 'username' from the payload
+                body: JSON.stringify(user),
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.msg || 'Registration failed');
+                throw new Error(data.message || 'Registration failed');
             }
 
             navigate('/login'); // Redirect on successful registration
@@ -90,6 +90,17 @@ const RegisterForm = () => {
 
                 {error && <div className="error-message">{error}</div>}
                 <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="username">Username:</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={user.username}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
                     <div className="form-group">
                         <label htmlFor="firstName">First Name:</label>
                         <input

@@ -1,52 +1,34 @@
-// components/CreateAnnouncementForm.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import CreateAnnouncementForm from '../components/CreateAnnouncementForm';
+import { useAnnouncements } from '../components/context/AnnouncementContext'; // Adjust the path as necessary
 
-const CreateAnnouncementForm = () => {
-    const [announcementData, setAnnouncementData] = useState({
-        title: '',
-        content: '',
-        announcementImage: null,
-    });
+const AnnouncementsPage = () => {
+    // Use the custom hook to access context values
+    const { announcements, fetchAnnouncements } = useAnnouncements();
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        if (name === 'announcementImage') {
-            setAnnouncementData({ ...announcementData, [name]: event.target.files[0] });
-        } else {
-            setAnnouncementData({ ...announcementData, [name]: value });
-        }
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        const formData = new FormData();
-        formData.append('title', announcementData.title);
-        formData.append('content', announcementData.content);
-        formData.append('announcementImage', announcementData.announcementImage);
-        // Assuming you're saving the userId somehow (e.g., in localStorage)
-        formData.append('userId', localStorage.getItem('userId'));
-
-        try {
-            const response = await fetch('/api/announcements', {
-                method: 'POST',
-                body: formData, // FormData will set the `Content-Type` to `multipart/form-data`
-            });
-            const data = await response.json();
-            console.log(data);
-            // Handle success (e.g., redirecting to announcements page)
-        } catch (error) {
-            console.error('Error creating announcement:', error);
-            // Handle error
-        }
-    };
+    useEffect(() => {
+        fetchAnnouncements();
+    }, [fetchAnnouncements]);
 
     return (
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
-            {/* Title, content, and image inputs */}
-            <button type="submit">Post Announcement</button>
-        </form>
+        <div>
+            <h1>Announcements</h1>
+            <CreateAnnouncementForm />
+            <div>
+                {announcements.map((announcement) => (
+                    <div key={announcement._id}>
+                        <h2>{announcement.title}</h2>
+                        <p>{announcement.content}</p>
+                        {/* Display the image if it exists */}
+                        {announcement.announcementImage && (
+                            <img src={`http://localhost:5000/${announcement.announcementImage}`} alt="Announcement" />
+                        )}
+                        {/* Further implementation details */}
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 };
 
-export default CreateAnnouncementForm;
+export default AnnouncementsPage;
