@@ -5,6 +5,9 @@
     border: 5px solid rgb(245, 245, 245);
     width: 210px !important;
     margin-left: 30px;
+    /* position: fixed; */
+    width: 25%;
+    height: 100vh;
 }
 
 .sidebar-links {

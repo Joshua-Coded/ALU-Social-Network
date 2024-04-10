@@ -6,11 +6,20 @@ import LikeIcon from './LikeIcon';
 import ShareIcon from './ShareIcon';
 import WhatsAppIcon from './WhatsappIcon';
 import FacebookIcon from './FacebookIcon';
+import EditAnnouncementModal from '../modals/EditAnnouncementModal';
 
 const AnnouncementList = () => {
     const { announcements, fetchAnnouncements } = useAnnouncements();
     const [loading, setLoading] = useState(true);
     const [commentInput, setCommentInput] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+
+
+    const handleEditClick = (announcement) => {
+        setSelectedAnnouncement(announcement); // Set the selected announcement
+        setIsModalOpen(true); // Open the modal
+    };
 
 
     const createWhatsAppShareLink = (announcementId) => {
@@ -45,6 +54,15 @@ const AnnouncementList = () => {
         // Implementation for opening the edit modal or form goes here
     };
 
+    // Define updateAnnouncement function here
+    const updateAnnouncement = (announcementId, updatedData) => {
+        console.log('Updating announcement', announcementId, updatedData);
+        // Here, you would typically make an API call to update the announcement
+        // For now, let's just log the updated data and close the modal
+        setIsModalOpen(false);
+        // Optionally, refresh your announcements list to reflect the update
+        fetchAnnouncements();
+    };
     // Function to handle comment submission
     const handleCommentSubmit = (announcementId) => {
         const comment = commentInput[announcementId] || '';
@@ -72,9 +90,10 @@ const AnnouncementList = () => {
             ) : (
                 announcements.map((announcement) => (
                     <div key={announcement._id} className="announcement-card">
-                        {/* Profile and content sections */}
                         <h2 className="announcement-title">{announcement.title}</h2>
-                        <button onClick={() => editPost(announcement._id)} className="edit-button">Edit</button>
+                        <button onClick={() => handleEditClick(announcement)} className="edit-button">Edit</button>
+
+
                         <p className="announcement-content">{announcement.content}</p>
                         <div className="announcement-actions">
                             <button
@@ -85,7 +104,7 @@ const AnnouncementList = () => {
                                 <LikeIcon />
                                 <span>Like | {localStorage.getItem(`likes-${announcement._id}`) || 0}</span>
                             </button>
-                            {/* Other buttons */}
+                            {/* Insert other buttons here */}
                         </div>
                         <div>
                             {/* Display comments for the announcement */}
@@ -111,6 +130,16 @@ const AnnouncementList = () => {
                         </a>
                     </div>
                 ))
+            )}
+
+            {isModalOpen && selectedAnnouncement && (
+                <EditAnnouncementModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    announcementId={selectedAnnouncement._id}
+                    // Assuming `updateAnnouncement` is a prop passed to `AnnouncementList` or defined within it
+                    updateAnnouncement={updateAnnouncement}
+                />
             )}
         </div>
     );

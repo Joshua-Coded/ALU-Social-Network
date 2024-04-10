@@ -86,19 +86,17 @@
 
 .edit-button {
     padding: 4px 8px;
-    font-size: 0.75rem;
-    /* Smaller font size for the edit text */
-    color: #007bff;
-    /* Bootstrap primary blue, or any color that fits your theme */
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgb(225, 153, 19);
     background-color: transparent;
-    border: 1px solid #007bff;
-    /* Matching border color */
-    border-radius: 4px;
-    /* Slightly rounded corners */
+    border: 1px solid #91a0b1;
+    border-radius: 8px;
+    max-width: 100px;
     cursor: pointer;
 }
 
 .edit-button:hover {
-    background-color: #e7f3ff;
-    /* Lighter blue background on hover for visibility */
+    background-color: #02080d;
+    color: #fff;
 }

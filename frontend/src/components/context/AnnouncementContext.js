@@ -24,7 +24,7 @@ export const AnnouncementProvider = ({ children }) => {
                     if (createdBy) {
                         const userResponse = await fetch(`http://localhost:5000/api/users/${createdBy}`);
                         const userData = await userResponse.json();
-                        announcement.createdBy = userData; // Replace createdBy ID with user data
+                        announcement.createdBy = userData;
                     }
                     return announcement;
                 }));
@@ -34,6 +34,31 @@ export const AnnouncementProvider = ({ children }) => {
             }
         } catch (error) {
             console.error("Error fetching announcements:", error);
+        }
+    };
+
+    const updateAnnouncement = async (announcementId, updatedData) => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/announcements/${announcementId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify(updatedData),
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setAnnouncements(prevAnnouncements =>
+                    prevAnnouncements.map(announcement =>
+                        announcement._id === announcementId ? { ...announcement, ...updatedData } : announcement
+                    )
+                );
+            } else {
+                throw new Error(data.message || 'Failed to update the announcement');
+            }
+        } catch (error) {
+            console.error("Error updating announcement:", error);
         }
     };
 
@@ -78,7 +103,7 @@ export const AnnouncementProvider = ({ children }) => {
     };
 
     return (
-        <AnnouncementContext.Provider value={{ announcements, fetchAnnouncements, createAnnouncement, deleteAnnouncement }}>
+        <AnnouncementContext.Provider value={{ announcements, fetchAnnouncements, createAnnouncement, deleteAnnouncement, updateAnnouncement }}>
             {children}
         </AnnouncementContext.Provider>
     );
