@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from './context/AuthContext'; // Adjust the import path as necessary
 import "./login.css";
 import appLogo from '../images/background.jpeg';
 import backgroundImage from '../images/logo.jpeg';
@@ -7,13 +8,16 @@ import { FcGoogle } from 'react-icons/fc';
 
 const LoginForm = () => {
     const [user, setUser] = useState({
-        username: '', // Use username instead of email
+        username: '',
         password: '',
     });
 
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    // Use the useAuth hook
+    const { login } = useAuth();
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -32,10 +36,7 @@ const LoginForm = () => {
             const response = await fetch('http://localhost:5000/api/users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    username: user.username, // Send username
-                    password: user.password,
-                }),
+                body: JSON.stringify(user),
             });
 
             const data = await response.json();
@@ -44,8 +45,9 @@ const LoginForm = () => {
                 throw new Error(data.message || 'Failed to login');
             }
 
-            // Assuming the token is sent back on successful login
-            localStorage.setItem('token', data.token);
+            // Call the login method from useAuth hook
+            login(data.token, data.user); // Assuming data.user contains user info
+
             navigate('/dashboard'); // Redirect to the dashboard upon successful login
         } catch (error) {
             console.error('Login error:', error);

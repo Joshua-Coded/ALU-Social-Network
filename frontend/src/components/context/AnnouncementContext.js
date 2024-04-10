@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const AnnouncementContext = createContext();
 
@@ -7,45 +7,78 @@ export const useAnnouncements = () => useContext(AnnouncementContext);
 export const AnnouncementProvider = ({ children }) => {
     const [announcements, setAnnouncements] = useState([]);
 
-    useEffect(() => {
-        fetchAnnouncements();
-    }, []);
-
     const fetchAnnouncements = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/announcements');
-            if (!response.ok) throw new Error('Failed to fetch announcements');
-
+            const response = await fetch('http://localhost:5000/api/announcements', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
             const data = await response.json();
-            setAnnouncements(data);
+            if (response.ok) {
+                // Map through announcements and populate createdBy field with required user fields
+                const populatedAnnouncements = await Promise.all(data.map(async (announcement) => {
+                    const { createdBy } = announcement;
+                    if (createdBy) {
+                        const userResponse = await fetch(`http://localhost:5000/api/users/${createdBy}`);
+                        const userData = await userResponse.json();
+                        announcement.createdBy = userData; // Replace createdBy ID with user data
+                    }
+                    return announcement;
+                }));
+                setAnnouncements(populatedAnnouncements);
+            } else {
+                throw new Error('Failed to fetch announcements');
+            }
         } catch (error) {
             console.error("Error fetching announcements:", error);
         }
     };
 
-    const createAnnouncement = async (formData) => {
+
+    const createAnnouncement = async (announcementData) => {
         try {
             const response = await fetch('http://localhost:5000/api/announcements', {
                 method: 'POST',
-                body: formData,
-                // No need to explicitly set Content-Type to multipart/form-data,
-                // fetch does that automatically with the correct boundary parameter
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify(announcementData),
             });
-            if (!response.ok) {
-                // If response is not ok, throw error with response status
-                throw new Error(`Failed to create announcement: ${response.status}`);
-            }
             const data = await response.json();
-            setAnnouncements(prev => [...prev, data]);
-            return data;
+            if (response.ok) {
+                setAnnouncements(prevAnnouncements => [...prevAnnouncements, data]);
+            } else {
+                throw new Error('Failed to post the announcement');
+            }
         } catch (error) {
-            console.error("Error creating announcement:", error);
-            throw error;
+            console.error("Error posting announcement:", error);
+        }
+    };
+
+    const deleteAnnouncement = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/announcements/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+            if (response.ok) {
+                setAnnouncements(prevAnnouncements => prevAnnouncements.filter(announcement => announcement._id !== id));
+            } else {
+                throw new Error('Failed to delete the announcement');
+            }
+        } catch (error) {
+            console.error("Error deleting announcement:", error);
         }
     };
 
     return (
-        <AnnouncementContext.Provider value={{ announcements, fetchAnnouncements, createAnnouncement }}>
+        <AnnouncementContext.Provider value={{ announcements, fetchAnnouncements, createAnnouncement, deleteAnnouncement }}>
             {children}
         </AnnouncementContext.Provider>
     );

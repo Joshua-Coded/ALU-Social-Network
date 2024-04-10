@@ -1,17 +1,24 @@
-import React, { useState, useContext } from 'react';
-import { useAuth } from '../components/context/AuthContext';
-import { useAnnouncements } from '../components/context/AnnouncementContext';
+import React, { useState, useContext, useEffect } from 'react';
+import { useAuth } from './context/AuthContext';
+import { useAnnouncements } from './context/AnnouncementContext';
 import AnnouncementModal from '../modals/AnnouncementModal';
 
+
 const CreateAnnouncementForm = () => {
-    const { currentUser } = useAuth();
-    const { createAnnouncement } = useAnnouncements();
+    const { user } = useAuth();
+    const { announcements, fetchAnnouncements, createAnnouncement } = useAnnouncements();
+
     const [modalVisible, setModalVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [announcementImage, setAnnouncementImage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        fetchAnnouncements(); // Fetch announcements when the component mounts
+    }, [fetchAnnouncements]);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -27,24 +34,32 @@ const CreateAnnouncementForm = () => {
         event.preventDefault();
         setLoading(true);
         setMessage('');
+        setError('');
 
         let formData = new FormData();
         formData.append('title', title);
         formData.append('content', content);
-        formData.append('createdBy', currentUser?.id || '');
-        if (announcementImage) formData.append('announcementImage', announcementImage);
+        if (user?.id) {
+            formData.append('createdBy', user.id);
+        }
+        if (announcementImage) {
+            formData.append('announcementImage', announcementImage);
+        }
 
         try {
             const response = await createAnnouncement(formData);
             if (response?.id) {
                 setMessage('Announcement created successfully!');
                 setModalVisible(false);
-
+                setTitle('');
+                setContent('');
+                setAnnouncementImage(null);
             } else {
                 throw new Error('Failed to create announcement. Please try again.');
             }
         } catch (error) {
-            setMessage(error.message);
+            console.error(error);
+            setError(error.message);
         } finally {
             setLoading(false);
         }
@@ -57,6 +72,7 @@ const CreateAnnouncementForm = () => {
                 <AnnouncementModal onClose={() => setModalVisible(false)}>
                     <div>
                         {message && <p>{message}</p>}
+                        {error && <p style={{ color: 'red' }}>{error}</p>}
                         <form onSubmit={handleSubmit}>
                             <div>
                                 <label htmlFor="title">Title:</label>
@@ -75,6 +91,7 @@ const CreateAnnouncementForm = () => {
                     </div>
                 </AnnouncementModal>
             )}
+
         </>
     );
 };

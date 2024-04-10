@@ -1,43 +1,58 @@
 const express = require('express');
-const multer = require('multer');
-const Announcement = require('../models/announcement');
 const router = express.Router();
+const Announcement = require('../models/announcement');
+const checkAuth = require('../config/checkAuth');
+const User = require('../models/user'); // Assuming you have a User model
 
-// Multer setup for file uploads
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, 'uploads/'),
-    filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
-});
-
-const upload = multer({ storage: storage });
-
-router.post('/', upload.single('announcementImage'), async (req, res) => {
+// Get all announcements with additional user data (firstname, lastname, profilePicture)
+router.get('/', async (req, res) => {
     try {
-        console.log(req.body); // Log the request body to see what's being received
-        console.log(req.file);
-        const { title, content } = req.body;
-        // Assume 'userId' is obtained from session or token
-        const userId = req.userId; // Example, adjust based on your auth strategy
-
-        if (!title || !content || !userId) {
-            return res.status(400).json({ message: "Missing required fields" });
-        }
-
-        const announcementImage = req.file ? req.file.path : '';
-        const newAnnouncement = new Announcement({
-            title,
-            content,
-            createdBy: userId,
-            announcementImage,
-        });
-
-        const savedAnnouncement = await newAnnouncement.save();
-        res.status(201).json(savedAnnouncement);
+        const announcements = await Announcement.find().sort({ createdAt: -1 }).populate({
+            path: 'createdBy',
+            select: 'firstname lastname profilePicture' // Select only required fields
+        }).select('title content'); // Select only required fields from Announcement model
+        res.json(announcements);
     } catch (error) {
-        console.error("Error creating announcement:", error);
-        res.status(500).json({ message: "Server error while creating announcement" });
+        res.status(500).json({ message: "Error fetching announcements", error: error.message });
     }
 });
 
+
+// Create an announcement
+router.post('/', checkAuth, async (req, res) => {
+    const { title, content, announcementImage } = req.body;
+
+    try {
+        const newAnnouncement = new Announcement({
+            title,
+            content,
+            announcementImage,
+            createdBy: req.user.userId // Use decoded user data from the token
+        });
+        await newAnnouncement.save();
+
+        // Populate createdBy field with firstname, lastname, and profilePicture from User model
+        const populatedAnnouncement = await Announcement.findById(newAnnouncement._id)
+            .populate('createdBy', 'firstname lastname profilePicture').exec();
+
+        res.status(201).json(populatedAnnouncement);
+    } catch (error) {
+        res.status(400).json({ message: "Error creating announcement", error: error.message });
+    }
+
+});
+
+// Delete an announcement
+router.delete('/:id', async (req, res) => {
+    try {
+        const announcement = await Announcement.findByIdAndDelete(req.params.id);
+        if (!announcement) {
+            return res.status(404).json({ message: "Announcement not found" });
+        }
+        res.json({ message: "Announcement deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting announcement", error: error.message });
+    }
+});
 
 module.exports = router;
