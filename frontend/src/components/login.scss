@@ -1,0 +1,78 @@
+.login {
+    height: 100vh;
+    background-color: whitesmoke;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .card {
+        display: flex;
+        width: 50%;
+        background-color: white;
+        border-radius: 20px;
+        min-height: 600px;
+        overflow: hidden;
+
+        .left {
+            flex: 1;
+            background: url("../images/logo.jpeg") center;
+            background-size: cover;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            color: #fff;
+
+            span {
+                display: flex;
+                gap: 10px;
+            }
+
+            img {
+                height: 50px;
+            }
+
+            h1 {
+                font-size: 40px;
+                line-height: 80px;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+            }
+
+            p {
+                border-radius: 10px;
+                background-color: #866e48;
+                // border: 2px solid #e29110;
+                text-align: center;
+                padding: 20px;
+            }
+        }
+
+        .right {
+            flex: 1;
+            padding: 50px;
+            display: flex !important;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+
+            h2 {}
+
+            p {}
+
+            form {
+                label {}
+
+                input {
+                    border: none;
+                    border-bottom: 1px solid lightgray;
+                    padding: 20px 10px;
+                }
+
+                button {}
+            }
+
+            p {}
+
+        }
+    }
+}

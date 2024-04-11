@@ -6,7 +6,7 @@
     flex-direction: row;
 }
 
-.background-section {
+/* .background-section {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -19,16 +19,16 @@
     text-align: center;
     color: white;
     width: 50%;
-}
+} */
 
-.span-us {
+/* .span-us {
     margin-top: 350px;
     margin-left: -250px;
     padding: 100px;
     letter-spacing: 4;
-}
+} */
 
-.span-us .small-text {
+/* .span-us .small-text {
     background-color: rgba(222, 158, 75, 0.139);
     width: 100%;
     margin-right: 250px !important;
@@ -36,9 +36,9 @@
     margin-left: 550px;
     padding: 10px;
     margin-top: 10px;
-}
+} */
 
-.logo-and-text {
+/* .logo-and-text {
     position: absolute;
     top: 0;
     left: 0;
@@ -46,24 +46,24 @@
     align-items: center;
     width: 100%;
     padding: 20px;
-}
+} */
 
-.alu-logo {
+/* .alu-logo {
     width: 100px;
     margin-right: 20px;
-}
+} */
 
-.network-text,
+/* .network-text,
 .small-text {
     margin: 0;
-}
+} */
 
-h1,
+/* h1,
 .small-text {
     max-width: 600px;
     margin: 0 auto;
     padding: 8px 0;
-}
+} */
 
 
 :root {
@@ -73,23 +73,23 @@ h1,
     --terms-privacy-color: #b2ba0bce;
 }
 
-.register-container {
+/* .register-container {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-left: 20px;
-}
+} */
 
-.register-container h2,
+/* .register-container h2,
 .register-container p {
     color: var(--alu-social-network-color);
-}
+} */
 
-.span-me {
+/* .span-me {
     color: var(--login-link-color);
     cursor: pointer;
-}
+} */
 
 .register-button {
     background-color: var(--create-account-button-bg);
@@ -116,15 +116,11 @@ h1,
 
 .form-group {
     position: relative;
-    margin-bottom: 1rem;
+    margin-bottom: 0.1rem;
 }
 
 .form-group input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
 }
 
 .form-group button {
@@ -274,10 +270,10 @@ h1,
 
     }
 
-    /* .form-group {
+    /* /* .form-group {
         position: relative;
         margin-bottom: 2rem;
-    }
+    } 
 
     .form-group input {
         width: 0%;

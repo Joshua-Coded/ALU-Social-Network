@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import "./register.css";
+import "./register.scss";
 import appLogo from '../images/background.jpeg';
 import backgroundImage from '../images/logo.jpeg';
 import { FcGoogle } from 'react-icons/fc';
@@ -70,97 +71,104 @@ const RegisterForm = () => {
 
 
     return (
-        <div className="container">
-            <div className="background-section" style={{ backgroundImage: `url(${backgroundImage})` }}>
-                <span className="logo-and-text">
-                    <img src={appLogo} alt="ALU Logo" className="alu-logo" />
-                    <p className="network-text">ALU Social Network</p>
-                </span>
-                <span className='span-us'>
-                    <h1>Building Bridges, <br /> and Fostering Community</h1>
-                    <p className='small-text'>ALU Social Network is your one-stop platform for fostering <br />
+        <div className="register">
+            <div className="card">
+                <div className="left">
+                    {/* className="background-section" style={{ backgroundImage: `url(${backgroundImage})` }} */}
+                    {/* <div>
+                        <span className="logo-and-text">
+                            <img src={appLogo} alt="ALU Logo" className="alu-logo" />
+                            <p className="network-text">ALU Social Network</p>
+                        </span>
+                    </div> */}
+                    <span>
+                        <img src={appLogo} alt="ALU Logo" />
+                        <h5>ALU Social Network</h5>
+                    </span>
+                    <h1>Building Bridges, and Fostering Community</h1>
+                    <p>ALU Social Network is your one-stop platform for fostering <br />
                         connections and building a vibrant community within the ALU <br />
                         ecosystem. Connect with fellow student and alumni, explore mentorship opportunities, and engage in meaningful discussion - all <br />
                         designed to enhance your professional growth, networking, and sense of belonging at ALU.</p>
-                </span>
-            </div>
-            <div className="register-container">
-                <h2>Welcome to <br /> <span className='span-me'>ALU Social Network.</span></h2>
-                <p>Have an account? <Link to="/login" className='span-me'>Login here</Link></p>
+                </div>
+                <div className="right">
+                    <h2>Welcome to <br /> <span className='span-me'>ALU Social Network.</span></h2>
+                    <p>Have an account? <Link to="/login" className='span-me'>Login here</Link></p>
 
-                {error && <div className="error-message">{error}</div>}
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="username">Username:</label>
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={user.username}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="firstName">First Name:</label>
-                        <input
-                            type="text"
-                            id="firstName"
-                            name="firstname"
-                            value={user.firstname}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="lastName">Last Name:</label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            name="lastname"
-                            value={user.lastname}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={user.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password:</label>
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            id="password"
-                            name="password"
-                            value={user.password}
-                            onChange={handleChange}
-                            required
-                        />
-                        <button type="button" onClick={togglePasswordVisibility}>
-                            {showPassword ? '🙈' : '👁'}
-                        </button>
-                    </div>
-                    <button type="submit" className="register-button">Create Account</button>
-                </form>
+                    {error && <div className="error-message">{error}</div>}
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="username">Username:</label>
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                value={user.username}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="firstName">First Name:</label>
+                            <input
+                                type="text"
+                                id="firstName"
+                                name="firstname"
+                                value={user.firstname}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="lastName">Last Name:</label>
+                            <input
+                                type="text"
+                                id="lastName"
+                                name="lastname"
+                                value={user.lastname}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email">Email:</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={user.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Password:</label>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                id="password"
+                                name="password"
+                                value={user.password}
+                                onChange={handleChange}
+                                required
+                            />
+                            <button type="button" onClick={togglePasswordVisibility}>
+                                {showPassword ? '🙈' : '👁'}
+                            </button>
+                        </div>
+                        <button type="submit" className="register-button">Create Account</button>
+                    </form>
 
-                <p>
-                    By clicking "<b>Create Account</b>", I acknowledge that I have read and do <br />
-                    hereby accept the terms and conditions in the ALU social network's <br />
-                    <span className='span-me'>Terms of Use</span> and <span className='span-me'>Privacy Policy.</span>
-                </p>
-                {/* onClick={handleGoogleLogin} */}
-                <button className="google-login-button" >
-                    <FcGoogle className="google-icon" />
-                    Create Account with Google
-                </button>
+                    <p>
+                        By clicking "<b>Create Account</b>", I acknowledge that I have read and do <br />
+                        hereby accept the terms and conditions in the ALU social network's <br />
+                        <span className='span-me'>Terms of Use</span> and <span className='span-me'>Privacy Policy.</span>
+                    </p>
+                    {/* onClick={handleGoogleLogin} */}
+                    <button className="google-login-button" >
+                        <FcGoogle className="google-icon" />
+                        Create Account with Google
+                    </button>
+                </div>
             </div>
         </div>
     );
