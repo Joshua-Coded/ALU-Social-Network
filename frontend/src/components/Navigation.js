@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiHome, FiUsers, FiMessageSquare, FiBell, FiSearch, FiMoreHorizontal } from 'react-icons/fi';
-import "./Navigation.css";
+// import "./Navigation.css";
+import "../components/navbar/navbar.scss";
 import { useAuth } from '../components/context/AuthContext';
 import LoginForm from './LoginForm';
 import appLogo from '../images/background.jpeg';
@@ -36,8 +37,8 @@ const Navigation = () => {
     }, []);
 
     return (
-        <nav className="navigation-container">
-            <div className="logo-and-search">
+        <nav className="navigation-container navbar">
+            <div className="logo-and-search left">
                 <Link to="/" className="logo-link">
                     <img src={appLogo} alt="ALU SN" className="app-logo" />
                     <h1>ALU SN</h1>
@@ -47,14 +48,15 @@ const Navigation = () => {
                     <input type="text" className="search-input" placeholder="Search here..." />
                 </div>
             </div>
-            <div className="nav-links">
+            <div className="nav-links right">
                 <Link to="/home" className="nav-icon-link"><FiHome /><span>Home</span></Link>
                 <Link to="/communities" className="nav-icon-link"><FiUsers /><span>Communities</span></Link>
                 <Link to="/messages" className="nav-icon-link"><FiMessageSquare /><span>Messages</span></Link>
-                <div className="nav-icon-link bell-icon"><FiBell /></div>
+                {/* <div className="nav-icon-link bell-icon"><FiBell /></div> */}
                 <div className="account-area">
 
-                    <div onClick={toggleProfileDropdown} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                    <div className="notification" onClick={toggleProfileDropdown} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                        <FiBell />
                         <img src={appLogo} alt="Profile" className="profile-picture" />
                         <FiMoreHorizontal className="profile-dropdown-icon" />
                     </div>

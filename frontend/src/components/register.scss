@@ -10,7 +10,7 @@
         width: 50%;
         background-color: white;
         border-radius: 20px;
-        height: 850px;
+        min-height: 600px;
         overflow: hidden;
 
         .left {
@@ -20,7 +20,7 @@
             padding: 50px;
             display: flex;
             flex-direction: column;
-            gap: 50px;
+            gap: 30px;
             color: #fff;
 
             span {
@@ -43,7 +43,6 @@
                 background-color: #866e48;
                 // border: 2px solid #e29110;
                 text-align: center;
-                padding: 20px;
             }
         }
 

@@ -1,23 +1,27 @@
+/* .layout {
+    position: static;
+    background-color: red;
+} */
+
 .dashboard-layout {
     display: flex;
     min-height: 100vh;
     background-color: whitesmoke;
+
 }
 
 .left-sidebar {
-    width: 25%;
+    flex: 2;
     background-color: #f0f0f0;
-    /* position: fixed; */
 }
 
 .main-page {
-    flex-grow: 1;
-    width: 50%;
+    flex: 6;
     background-color: #ffffff;
 }
 
 .right-sidebar {
-    width: 25%;
+    flex: 2;
     background-color: #f0f0f0;
 
 }

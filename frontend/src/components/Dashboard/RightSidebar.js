@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './RightSidebar.css';
+import "./rightbar.scss";
 
 const RightSidebar = () => {
     const newsTrends = [
@@ -22,6 +24,14 @@ const RightSidebar = () => {
 
     return (
         <div className="right-sidebar">
+            <div className='container'>
+                <div className='item'>
+                    <span>Events</span>
+                    <Link className='event-link' to={"/"}>View All</Link>
+
+                </div>
+
+            </div>
             <h2>News Trends</h2>
             <ul>
                 {newsTrends.map((news, index) => (

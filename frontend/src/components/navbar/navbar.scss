@@ -1,0 +1,80 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    height: 80px;
+    border-bottom: 1px solid lightgray;
+    position: sticky;
+    top: 0;
+
+
+    .left {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        .logo-link {
+            display: flex;
+            gap: 15px;
+            text-decoration: none;
+
+            img {
+                height: 50px;
+            }
+
+            h1 {
+                color: black;
+            }
+        }
+
+        .search-area {
+            display: flex;
+            align-items: center;
+            border: 1px solid lightgray;
+            padding: 5px;
+            border-radius: 10px;
+
+
+            .search-icon {}
+
+            input {
+                border: none;
+                width: 400px;
+            }
+        }
+
+        input {}
+    }
+
+    .right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+
+        .nav-icon-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .account-area {
+            display: flex;
+            align-items: center;
+
+            .notification {
+                gap: 8px;
+            }
+
+            img {
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+            }
+        }
+
+    }
+}

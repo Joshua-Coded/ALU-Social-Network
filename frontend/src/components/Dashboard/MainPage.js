@@ -2,9 +2,10 @@ import React from 'react';
 import { useDashboard } from '../context/DashboardContext';
 import Announcements from '../../pages/ Announcements';
 import Vibe from '../../pages/Vibe';
-import Event from '../../pages/Event';
+import Events from '../../pages/Events';
 import Thread from '../../pages/Thread';
 import './MainPage.css';
+
 
 const MainPage = () => {
     const { activeSection } = useDashboard();
@@ -13,10 +14,11 @@ const MainPage = () => {
         switch (activeSection) {
             case 'Announcements':
                 return <Announcements />;
+
             case 'Vibe':
                 return <Vibe />;
             case 'Event':
-                return <Event />;
+                return <Events />;
             case 'Thread':
                 return <Thread />;
             default:

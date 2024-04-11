@@ -1,6 +1,6 @@
 /* body {
     background-color: black !important;
-    position: fixed !important;
+    position: sticky !important;
     margin: auto;
     margin-right: 1000px;
 } */
@@ -8,6 +8,7 @@
 .dashboard-container {
     display: flex;
     min-height: 100vh;
+    position: fixed;
 }
 
 .left-sidebar {

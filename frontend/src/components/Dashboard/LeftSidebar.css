@@ -3,11 +3,15 @@
     padding: 20px;
     border-radius: 8px;
     border: 5px solid rgb(245, 245, 245);
-    width: 210px !important;
-    margin-left: 30px;
-    /* position: fixed; */
-    width: 25%;
-    height: 100vh;
+    /* width: 210px !important; */
+    margin-left: 5px;
+    height: calc(100vh - 100px);
+    flex: 1;
+    position: sticky;
+    top: 100px;
+    overflow: scroll;
+
+
 }
 
 .sidebar-links {
@@ -24,7 +28,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    font-size: 20px;
+    font-size: 18px;
     color: #606770;
     cursor: pointer;
 
@@ -35,7 +39,7 @@
 }
 
 .sidebar-links li.active {
-    background-color: rgb(224, 198, 120);
+    color: rgb(224, 198, 120);
     border-radius: 8px;
     padding: 20px;
 }
@@ -52,7 +56,7 @@
 }
 
 .sidebar-links li:hover {
-    background-color: rgb(226, 198, 124);
+    color: rgb(226, 198, 124);
     padding: 20px;
     border-radius: 8px;
 

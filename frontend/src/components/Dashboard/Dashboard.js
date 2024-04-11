@@ -9,11 +9,13 @@ import Navigation from '../Navigation';
 const Dashboard = () => {
     return (
         <DashboardProvider>
-            <Navigation />
-            <div className="dashboard-layout">
-                <LeftSidebar className="left-sidebar" />
-                <MainPage className="main-page" />
-                <RightSidebar className="right-sidebar" />
+            <div className='layout'>
+                <Navigation />
+                <div className="dashboard-layout">
+                    <LeftSidebar className="left-sidebar" />
+                    <MainPage className="main-page" />
+                    <RightSidebar className="right-sidebar" />
+                </div>
             </div>
         </DashboardProvider>
     );

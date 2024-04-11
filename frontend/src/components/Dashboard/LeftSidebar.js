@@ -21,11 +21,12 @@ const LeftSidebar = ({ className }) => {
                 <li className={activeSection === 'Thread' ? 'active' : ''} onClick={() => changeSection('Thread')}>
                     <FiAlertOctagon />Thread
                 </li>
-
+                <hr />
                 <div className="separator"></div> {/* This div acts as a separator */}
 
                 <li className="faded" onClick={() => changeSection('Communities')}>
                     Communities
+
                 </li>
                 <li className="faded" onClick={() => changeSection('DirectMessages')}>
                     Direct Messages

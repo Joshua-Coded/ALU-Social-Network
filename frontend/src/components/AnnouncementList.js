@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAnnouncements } from './context/AnnouncementContext';
 import "./AnnouncementList.css";
+import "./announcement.scss";
 import ChatIcon from './Chat';
 import LikeIcon from './LikeIcon';
 import ShareIcon from './ShareIcon';
@@ -104,7 +105,7 @@ const AnnouncementList = () => {
                                 <LikeIcon />
                                 <span>Like | {localStorage.getItem(`likes-${announcement._id}`) || 0}</span>
                             </button>
-                            {/* Insert other buttons here */}
+ 
                         </div>
                         <div>
                             {/* Display comments for the announcement */}
