@@ -5,11 +5,11 @@
     border: 5px solid rgb(245, 245, 245);
     /* width: 210px !important; */
     margin-left: 5px;
-    height: calc(100vh - 100px);
+    /* height: calc(100vh - 100px);
     flex: 1;
     position: sticky;
     top: 100px;
-    overflow: scroll;
+    overflow: scroll; */
 
 
 }
