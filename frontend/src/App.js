@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from '../src/pages/HomePage';
 import LoginForm from '../src/components/LoginForm';
 import RegisterForm from '../src/components/RegisterForm';
@@ -7,27 +7,12 @@ import Dashboard from '../src/components/Dashboard/Dashboard';
 import Messages from './pages/Messages';
 import Events from './pages/Events';
 import Thread from './pages/Thread';
-import Announcements from './pages/ Announcements';
+import Announcements from './pages/ Announcements';  // Make sure there's no space in the path
 import { AuthProvider } from '../src/components/context/AuthContext';
 import { AnnouncementProvider } from '../src/components/context/AnnouncementContext';
 import ForgotPasswordForm from './components/ForgotPasswordForm';
 import Vibe from './pages/Vibe';
-import NavBar from './components/navbar/Navbar';
-import LeftBar from './components/leftBar/LeftBar';
-import RightBar from './components/rightBar/RightBar';
-
-const layout = () => {
-  return (
-    <div>
-      <NavBar />
-      <div style={{ display: "flex" }}>
-        <LeftBar />
-        <Outlet />
-        <RightBar />
-      </div>
-    </div>
-  )
-}
+import UserProfile from './components/UserProfile';  // Ensure this import is correct
 
 function App() {
   return (
@@ -45,6 +30,7 @@ function App() {
             <Route path="/thread" element={<Thread />} />
             <Route path="/messages" element={<Messages />} />
             <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+            <Route path="/profile" element={<UserProfile />} />  // Add this line
           </Routes>
         </Router>
       </AnnouncementProvider>

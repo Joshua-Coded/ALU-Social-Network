@@ -5,8 +5,32 @@ const User = require('../models/user');
 require('dotenv').config();
 const crypto = require('crypto');
 const transporter = require('../config/nodemailerSetup');
+const multer = require('multer');
+const path = require('path');
 
 const router = express.Router();
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, './uploads');  // ensure this directory exists or is created during server setup
+    },
+    filename: function (req, file, callback) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname);
+        callback(null, file.fieldname + '-' + uniqueSuffix);
+    }
+});
+
+// Set up the file filter to only accept images
+const fileFilter = (req, file, callback) => {
+    if (file.mimetype.startsWith('image')) {
+        callback(null, true);
+    } else {
+        callback(new Error('Not an image! Please upload only images.'), false);
+    }
+};
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 
 // valid email address
@@ -157,6 +181,36 @@ router.post('/reset-password/:token', async (req, res) => {
     await user.save();
 
     res.send('Your password has been successfully reset.');
+});
+
+// Endpoint to update user profile
+router.put('/:userId', upload.fields([
+    { name: 'profileImage', maxCount: 1 },
+    { name: 'banner', maxCount: 1 }
+]), async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const updates = JSON.parse(req.body.userData);
+
+        // Check if files are uploaded and update the paths accordingly
+        if (req.files['profileImage']) {
+            updates.profileImage = `/uploads/${req.files['profileImage'][0].filename}`;
+        }
+        if (req.files['banner']) {
+            updates.banner = `/uploads/${req.files['banner'][0].filename}`;
+        }
+
+        // Update user in the database
+        const user = await User.findByIdAndUpdate(userId, updates, { new: true });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.json({ message: "Profile updated successfully", user });
+    } catch (error) {
+        console.error(`Profile update error: ${error}`);
+        res.status(500).json({ message: "Failed to update profile", error: error.message });
+    }
 });
 
 
