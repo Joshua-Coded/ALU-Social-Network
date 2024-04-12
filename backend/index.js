@@ -7,6 +7,7 @@ const path = require('path');
 const postRoutes = require('./routes/postRoutes');
 const userRoutes = require('./routes/userRoutes');
 const announcementRoutes = require('./routes/announcementRoutes');
+const eventRoutes = require('./routes/eventRoutes');
 
 
 // Check and create uploads directory
@@ -45,7 +46,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Register routes
 app.use('/api/users', userRoutes); // User routes
 app.use('/api/feed', postRoutes); // Post routes
-app.use('/api/announcements', announcementRoutes);
+app.use('/api/announcements', announcementRoutes); // Announcement routes
+app.use('/api/events', eventRoutes);
 
 // Fallback route for undefined paths
 app.use((req, res) => {
