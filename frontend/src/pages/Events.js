@@ -1,7 +1,12 @@
-import React from 'react';
+// Events.js
+import React, { useState } from 'react';
+import RegistrationModal from './RegistrationModal';
 import "./events.scss";
 
 const Events = () => {
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedEvent, setSelectedEvent] = useState(null);
+
     const events = [
         {
             id: 1,
@@ -126,23 +131,43 @@ const Events = () => {
 
     ];
 
+    const handleRegisterClick = (event) => {
+        setSelectedEvent(event);
+        setModalOpen(true);  // Ensure this is set to true correctly
+    };
+
+    const handleModalClose = () => {
+        setModalOpen(false);
+    };
+
+    const handleRegistrationSubmit = (formData) => {
+        console.log("Registration data:", formData);
+        handleModalClose();  // Make sure modal is closed after submission
+    };
+
     return (
         <>
             <h2 className="events-header">Upcoming Events</h2>
             <div className="events-container">
-
                 {events.map(event => (
                     <div key={event.id} className="event-card">
                         <img src={event.img} alt={event.name} className="event-image" />
                         <div className="event-info">
                             <h2>{event.name}</h2>
                             <p>{event.description}</p>
-                            <button onClick={() => alert("Registering for: " + event.name)}>Register for Event</button>
+                            <button onClick={() => handleRegisterClick(event)}>Register for Event</button>
                         </div>
                     </div>
-
                 ))}
             </div>
+            {selectedEvent && modalOpen && (
+                <RegistrationModal
+                    isOpen={modalOpen}
+                    onClose={handleModalClose}
+                    onRegister={handleRegistrationSubmit}
+                    event={selectedEvent}
+                />
+            )}
         </>
     );
 };
