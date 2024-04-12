@@ -7,12 +7,12 @@ import Dashboard from '../src/components/Dashboard/Dashboard';
 import Messages from './pages/Messages';
 import Events from './pages/Events';
 import Thread from './pages/Thread';
-import Announcements from './pages/ Announcements';  // Make sure there's no space in the path
+import Announcements from './pages/ Announcements';
 import { AuthProvider } from '../src/components/context/AuthContext';
 import { AnnouncementProvider } from '../src/components/context/AnnouncementContext';
 import ForgotPasswordForm from './components/ForgotPasswordForm';
 import Vibe from './pages/Vibe';
-import UserProfile from './components/UserProfile';  // Ensure this import is correct
+import UserProfile from './components/UserProfile';
 
 function App() {
   return (
