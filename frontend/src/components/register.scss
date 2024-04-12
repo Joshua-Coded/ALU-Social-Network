@@ -7,23 +7,23 @@
 
     .card {
         display: flex;
-        width: 50%;
+        width: 60%;
         background-color: white;
         border-radius: 20px;
         max-height: 600px;
         overflow: hidden;
 
-        .left {
-            flex: 7;
+        .register-left {
+            flex: 2;
             background: url("../images/logo.jpeg") center;
             background-size: cover;
-            // padding: 10px;
+            padding: 50px;
             display: flex;
             flex-direction: column;
-            // gap: 10px;
+            gap: 5px;
             color: #fff;
-            // height: 600px;
-            // margin-top: 200px;
+
+
 
             span {
                 display: flex;
@@ -35,26 +35,28 @@
             }
 
             h1 {
-                font-size: 40px;
+                font-size: 30px;
                 line-height: 80px;
                 font-family: Georgia, 'Times New Roman', Times, serif;
+                margin-top: 50px;
             }
 
             p {
                 border-radius: 10px;
                 background-color: #866e48;
-                border: 2px solid #e29110;
+                // border: 2px solid #e29110;
                 text-align: center;
+                margin-top: 40px;
             }
         }
 
-        .right {
-            flex: 6;
-            padding: 50px;
-            display: flex !important;
-            flex-direction: column;
-            gap: 5px;
-            justify-content: center;
+        .register-right {
+            flex: 2;
+            padding: 18px;
+            // display: flex !important;
+            // flex-direction: column;
+            // gap: 5px;
+            // justify-content: center;
 
             h2 {}
 

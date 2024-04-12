@@ -15,13 +15,13 @@
 
 
         .left {
-            flex: 7;
+            flex: 1;
             background: url("../images/logo.jpeg") center;
             background-size: cover;
-            padding: 40px;
+            padding: 50px;
             display: flex;
             flex-direction: column;
-            gap: 35px;
+            gap: 10px;
             color: #fff;
 
             span {
@@ -34,7 +34,7 @@
             }
 
             h1 {
-                font-size: 30px;
+                font-size: 50px;
                 line-height: 50px;
                 font-family: Georgia, 'Times New Roman', Times, serif;
             }
@@ -50,7 +50,7 @@
         }
 
         .right {
-            flex: 6;
+            flex: 1;
             padding: 50px;
             display: flex !important;
             flex-direction: column;

@@ -73,7 +73,7 @@ const RegisterForm = () => {
     return (
         <div className="register">
             <div className="card">
-                <div className="left">
+                <div className="register-left">
                     {/* className="background-section" style={{ backgroundImage: `url(${backgroundImage})` }} */}
                     {/* <div>
                         <span className="logo-and-text">
@@ -91,7 +91,7 @@ const RegisterForm = () => {
                         ecosystem. Connect with fellow student and alumni, explore mentorship opportunities, and engage in meaningful discussion - all <br />
                         designed to enhance your professional growth, networking, and sense of belonging at ALU.</p>
                 </div>
-                <div className="right">
+                <div className="register-right">
                     <h2>Welcome to <br /> <span className='span-me'>ALU Social Network.</span></h2>
                     <p>Have an account? <Link to="/login" className='span-me'>Login here</Link></p>
 
