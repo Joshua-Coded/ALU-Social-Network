@@ -1,0 +1,50 @@
+.about-me-card {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+    margin-right: 20px;
+    width: 50%;
+    overflow: scroll;
+
+    h2 {
+        color: black;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    p {
+        font-size: 14px;
+        margin-top: 10px;
+
+        strong {
+            font-weight: bold;
+        }
+    }
+}
+
+.other-component {
+
+    flex: 0 0 48%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+}
+
+
+// Responsive adjustment for smaller screens
+@media (max-width: 768px) {
+    .user-profile {
+        flex-direction: column;
+
+        .about-me-card,
+        .other-component {
+            flex-basis: 100%;
+            margin-right: 0;
+        }
+    }
+}

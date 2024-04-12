@@ -1,0 +1,55 @@
+.professional-details {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    flex: 1 1 50%;
+
+    width: 50%;
+    margin-left: 10px;
+    margin-top: 10px;
+
+    h1 {
+        color: black;
+        margin-left: 100px;
+    }
+
+    h2 {
+        // margin-left: 100px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+    }
+
+    input[type="text"] {
+        width: 70%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+
+    button {
+        padding: 5px;
+        background-color: indianred;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 7%;
+
+        margin-left: 660px;
+        margin-top: 10px;
+
+        &:hover {
+            background-color: darken(#007bff, 10%);
+        }
+    }
+}
