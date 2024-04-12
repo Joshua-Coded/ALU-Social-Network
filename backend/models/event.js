@@ -12,7 +12,7 @@ const eventSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: String,
     img: String,
-    registrations: [registrationSchema] // Embedded documents for registrations
+    registrations: [registrationSchema]
 });
 
 module.exports = mongoose.model('Event', eventSchema);

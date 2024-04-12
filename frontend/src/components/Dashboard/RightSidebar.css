@@ -1,12 +1,15 @@
 .right-sidebar {
-    border-left: 1px solid #ccc;
+    background-color: #ffffff !important;
     padding: 20px;
-    /* min-height: 100vh; */
-    background-color: #fff;
-    /* height: calc(100vh - 100px);
-    flex: 2;
+    border-radius: 8px;
+    border: 5px solid rgb(245, 245, 245);
+    /* width: 210px !important; */
+    margin-left: 5px;
+    height: calc(100vh - 200px);
+    flex: 1;
     position: sticky;
-    top: 100px; */
+    top: 200px;
+    overflow: scroll;
 
 }
 

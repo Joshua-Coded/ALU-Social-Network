@@ -43,7 +43,7 @@ const LoginForm = () => {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'Failed to login');
+                throw new Error(data.message || 'invalid credentials, check your password or email');
             }
 
             // Call the login method from useAuth hook

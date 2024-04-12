@@ -7,25 +7,26 @@
 
     .card {
         display: flex;
-        width: 50%;
+        width: 55%;
         background-color: white;
         border-radius: 20px;
         height: 600px;
         overflow: hidden;
 
+
         .left {
-            flex: 1;
+            flex: 7;
             background: url("../images/logo.jpeg") center;
             background-size: cover;
             padding: 40px;
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 35px;
             color: #fff;
 
             span {
                 display: flex;
-                gap: 10px;
+                gap: 20px;
             }
 
             img {
@@ -44,15 +45,16 @@
                 // border: 2px solid #e29110;
                 text-align: center;
                 padding: 20px;
+                width: 350px;
             }
         }
 
         .right {
-            flex: 1;
+            flex: 6;
             padding: 50px;
             display: flex !important;
             flex-direction: column;
-            gap: 10px;
+            gap: 5px;
             justify-content: center;
 
             h2 {}
@@ -60,12 +62,18 @@
             p {}
 
             form {
-                label {}
+                label {
+                    color: black;
+                    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                    font-size: 20px;
+                    // margin-bottom: 20px;
+                }
 
                 input {
                     border: none;
                     border-bottom: 1px solid lightgray;
                     padding: 20px 10px;
+                    margin-bottom: 20px;
                 }
 
                 button {}

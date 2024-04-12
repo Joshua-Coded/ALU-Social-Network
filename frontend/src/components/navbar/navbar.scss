@@ -5,8 +5,9 @@
     padding: 10px 20px;
     height: 80px;
     border-bottom: 1px solid lightgray;
-    // position: sticky;
-    // top: 0;
+    position: sticky;
+    top: 0;
+    background-color: white;
 
 
     .left {
@@ -32,8 +33,10 @@
             display: flex;
             align-items: center;
             border: 1px solid lightgray;
-            padding: 5px;
+            padding: 2px;
             border-radius: 10px;
+            height: 30px;
+            gap: 20px;
 
 
             .search-icon {}
@@ -41,7 +44,13 @@
             input {
                 border: none;
                 width: 400px;
+
+                ::placeholder {
+                    text-align: center;
+                }
             }
+
+
         }
 
         input {}
