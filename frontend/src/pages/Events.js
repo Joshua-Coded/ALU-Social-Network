@@ -49,7 +49,7 @@ const Events = () => {
                         <div className="event-info">
                             <h2>{event.name}</h2>
                             <p>{event.description}</p>
-                            <button onClick={() => handleRegisterClick(event)}>Register for Event</button>
+                            <button className='register-button' onClick={() => handleRegisterClick(event)}>Register for Event</button>
                         </div>
                     </div>
                 )) : <p>Loading events...</p>}

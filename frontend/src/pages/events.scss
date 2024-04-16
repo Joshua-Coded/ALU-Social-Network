@@ -23,11 +23,12 @@
     .event-info {
         padding: 2px;
 
+
         h2 {
             margin: 10px 0;
         }
 
-        button {
+        .register-button {
             padding: 5px 10px;
             background-color: #dbb51c;
             color: white;
@@ -36,7 +37,7 @@
             cursor: pointer;
             transition: background-color 0.3s;
             margin-left: 10px;
-            width: 150px;
+            width: 150px !important;
 
             &:hover {
                 background-color: #ddd3c3;

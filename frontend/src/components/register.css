@@ -133,6 +133,10 @@
     cursor: pointer;
 }
 
+.form-group>.eyes {
+    background-color: none !important;
+}
+
 .error-message {
     color: red;
     margin-bottom: 1rem;

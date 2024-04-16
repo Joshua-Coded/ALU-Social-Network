@@ -151,23 +151,23 @@ const RegisterForm = () => {
                                 onChange={handleChange}
                                 required
                             />
-                            <button type="button" onClick={togglePasswordVisibility}>
+                            <button className='eyes' type="button" onClick={togglePasswordVisibility}>
                                 {showPassword ? '🙈' : '👁'}
                             </button>
                         </div>
                         <button type="submit" className="register-button">Create Account</button>
                     </form>
 
-                    <p>
+                    {/* <p>
                         By clicking "<b>Create Account</b>", I acknowledge that I have read and do <br />
                         hereby accept the terms and conditions in the ALU social network's <br />
                         <span className='span-me'>Terms of Use</span> and <span className='span-me'>Privacy Policy.</span>
-                    </p>
+                    </p> */}
                     {/* onClick={handleGoogleLogin} */}
-                    <button className="google-login-button" >
+                    {/* <button className="google-login-button" >
                         <FcGoogle className="google-icon" />
                         Create Account with Google
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>

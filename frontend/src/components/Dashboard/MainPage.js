@@ -12,13 +12,12 @@ const MainPage = () => {
 
     const renderSection = () => {
         switch (activeSection) {
-            case 'Announcements':
-                return <Announcements />;
-
-            case 'Vibe':
-                return <Vibe />;
             case 'Event':
                 return <Events />;
+            case 'Announcements':
+                return <Announcements />;
+            case 'Vibe':
+                return <Vibe />;
             case 'Thread':
                 return <Thread />;
             default:

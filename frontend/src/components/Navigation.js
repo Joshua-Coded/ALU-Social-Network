@@ -66,7 +66,7 @@ const Navigation = () => {
                                 <>
                                     <Link to="/profile" onClick={() => setShowProfileDropdown(false)}>My Profile</Link>
                                     <Link to="/settings" onClick={() => setShowProfileDropdown(false)}>Settings</Link>
-                                    <button onClick={() => { handleLogout(); setShowProfileDropdown(false); }}>Logout</button>
+                                    <button className='logout-button' onClick={() => { handleLogout(); setShowProfileDropdown(false); }}>Logout</button>
                                 </>
                             ) : (
                                 <LoginForm onLoginSuccess={() => {

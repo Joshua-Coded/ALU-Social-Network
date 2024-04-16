@@ -108,20 +108,21 @@
 }
 
 .profile-dropdown {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: calc(100% + 5px);
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 10px 0;
-    width: 200px;
-    z-index: 1000;
+    display: none !important;
+    position: absolute !important;
+    right: 0 !important;
+    top: calc(100% + 5px) !important;
+    background-color: #fff !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 8px !important;
+    padding: 10px 0 !important;
+    width: 200px !important;
+    z-index: 1000 !important;
 }
 
 .account-area {
     display: flex;
+    flex-direction: column !important;
     align-items: center;
     position: relative;
     cursor: pointer;
@@ -137,16 +138,16 @@
 
 
 .profile-dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 200px;
-    z-index: 100;
+    display: none !important;
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    background-color: #fff !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    width: 200px !important;
+    z-index: 100 !important;
 }
 
 /* Show the dropdown when its corresponding state is true */

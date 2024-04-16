@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useAnnouncements } from './context/AnnouncementContext';
-import "./AnnouncementList.css";
-import "./announcement.scss";
+// import "./AnnouncementList.css";
+// import "./announcement.scss";
 import ChatIcon from './Chat';
 import LikeIcon from './LikeIcon';
 import ShareIcon from './ShareIcon';
 import WhatsAppIcon from './WhatsappIcon';
 import FacebookIcon from './FacebookIcon';
 import EditAnnouncementModal from '../modals/EditAnnouncementModal';
+import "./annlist.scss";
 
 const AnnouncementList = () => {
     const { announcements, fetchAnnouncements } = useAnnouncements();
@@ -18,8 +19,8 @@ const AnnouncementList = () => {
 
 
     const handleEditClick = (announcement) => {
-        setSelectedAnnouncement(announcement); // Set the selected announcement
-        setIsModalOpen(true); // Open the modal
+        setSelectedAnnouncement(announcement);
+        setIsModalOpen(true);
     };
 
 
@@ -52,16 +53,12 @@ const AnnouncementList = () => {
 
     const editPost = (announcementId) => {
         console.log(`Editing post ${announcementId}`);
-        // Implementation for opening the edit modal or form goes here
     };
 
     // Define updateAnnouncement function here
     const updateAnnouncement = (announcementId, updatedData) => {
         console.log('Updating announcement', announcementId, updatedData);
-        // Here, you would typically make an API call to update the announcement
-        // For now, let's just log the updated data and close the modal
         setIsModalOpen(false);
-        // Optionally, refresh your announcements list to reflect the update
         fetchAnnouncements();
     };
     // Function to handle comment submission
@@ -76,7 +73,6 @@ const AnnouncementList = () => {
 
         // Clear input field after submission
         setCommentInput(prev => ({ ...prev, [announcementId]: '' }));
-        // Optionally, refresh comments display if necessary
     };
 
     // Function to handle comment input change
@@ -102,33 +98,35 @@ const AnnouncementList = () => {
                                 onClick={() => handleLike(announcement._id)}
                                 style={{ cursor: 'pointer' }}
                             >
-                                <LikeIcon />
+                                <LikeIcon className="icon" />
                                 <span>Like | {localStorage.getItem(`likes-${announcement._id}`) || 0}</span>
                             </button>
- 
+
                         </div>
                         <div>
-                            {/* Display comments for the announcement */}
+
                             {JSON.parse(localStorage.getItem(`comments-${announcement._id}`) || '[]').map((comment, index) => (
                                 <div key={index}>{comment}</div>
                             ))}
                         </div>
                         <div className="comment-section">
                             <input
+                                className='input-me'
                                 type="text"
                                 value={commentInput[announcement._id] || ''}
                                 onChange={(e) => handleCommentChange(announcement._id, e.target.value)}
                                 placeholder="Add a comment..."
                             />
-                            <button onClick={() => handleCommentSubmit(announcement._id)}>Submit</button>
+                            <button className='comment-button' onClick={() => handleCommentSubmit(announcement._id)}>Submit</button>
                         </div>
-
-                        <a href={createWhatsAppShareLink(announcement._id)} target="_blank" rel="noopener noreferrer">
-                            <WhatsAppIcon className="social" />
-                        </a>
-                        <a href={createFacebookShareLink(announcement._id)} target="_blank" rel="noopener noreferrer">
-                            <FacebookIcon />
-                        </a>
+                        <div className='social-wrapper'>
+                            <a className="whatsapp" href={createWhatsAppShareLink(announcement._id)} target="_blank" rel="noopener noreferrer">
+                                <WhatsAppIcon />
+                            </a>
+                            <a className='facebook' href={createFacebookShareLink(announcement._id)} target="_blank" rel="noopener noreferrer">
+                                <FacebookIcon />
+                            </a>
+                        </div>
                     </div>
                 ))
             )}
@@ -138,7 +136,6 @@ const AnnouncementList = () => {
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
                     announcementId={selectedAnnouncement._id}
-                    // Assuming `updateAnnouncement` is a prop passed to `AnnouncementList` or defined within it
                     updateAnnouncement={updateAnnouncement}
                 />
             )}

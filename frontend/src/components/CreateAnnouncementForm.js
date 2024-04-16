@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useAuth } from './context/AuthContext';
 import { useAnnouncements } from './context/AnnouncementContext';
 import AnnouncementModal from '../modals/AnnouncementModal';
+import "./ann.scss";
 
 
 const CreateAnnouncementForm = () => {
